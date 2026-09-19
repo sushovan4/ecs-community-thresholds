@@ -124,3 +124,47 @@ abundance = point-intercept hit count per USDA_code; non-plant codes
 (beginning with "2", e.g. litter, rock, bare ground) excluded. z = mean of
 mean_depth at the matching snow stake (point_ID = plot) over all dates.
 No region field.
+
+---
+
+## Amendment 2 — 2026-09-19, cross-dataset tests, before any was computed
+
+Three tests across datasets are registered here. At this point the spatial
+programme has produced exactly one result (D5, no detection); no TITAN change
+point, attribution, or ordering statistic has been computed for any dataset.
+
+**A. Ordering (does structure change earlier on the gradient than
+composition?).** For every dataset where the primary test detects
+(p <= 0.05), let z_struct be z-hat and z_marg be TITAN's sum(z-) community
+change point on the same unit-mean matrix (rule 8 settings). The ordering
+statistic is R = (z_marg - z_struct) / (gradient interquartile range of the
+units), a scale-free signed quantity; R > 0 means structure changes at a
+lower gradient value. The confirmatory test across detected datasets is a
+two-sided Wilcoxon signed-rank test of R against zero, reported once with
+the sign test beside it. Datasets that do not detect are reported with their
+R values but excluded from the test, since z-hat is not interpretable there.
+The Everglades long-term panel (a separate registration) is included as one
+dataset. Should fewer than four datasets detect, the test is reported as
+underpowered and the individual R values stand as description.
+
+**B. Attribution (do the taxa carrying structural change differ from the
+taxa whose abundance marks the threshold?).** For every detected dataset,
+per-taxon curvature changes are computed at the detected split by the exact
+Gauss-Bonnet decomposition (as in `21_curvature_attribution.py`). The
+comparison statistic is the overlap between the five taxa with the largest
+absolute curvature share and TITAN's pure-and-reliable indicator taxa,
+against the overlap expected if the two sets were drawn independently
+(hypergeometric). Reported per dataset and pooled by summing observed and
+expected overlaps.
+
+**C. Sub-annual temporal series.** The temporal registration's unit is the
+survey year; ten series so detected nothing, consistent with 20-35 units
+being below the method's operating range. Where a programme surveys several
+times per year, the survey OCCASION (year x period) is a valid unit and
+multiplies the unit count. Registered now, before any such series is built:
+the Everglades MWD programme's five annual periods give occasion-level
+series for the same four regions (E1-E4 become T1-T4, with PERIOD4 ordinal
+within a water year), z = the occasion's decimal date, columns = plot
+samples within the occasion, all other rules unchanged. Inclusion still
+requires 40+ occasions, 40+ columns, 15+ taxa. The year-level results
+already obtained are reported unchanged beside these.
