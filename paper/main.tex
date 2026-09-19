@@ -23,7 +23,7 @@
 characteristic surfaces}
 
 \author[gwu]{Sushovan Majhi\corref{cor}}
-\ead{s.majhi@email.gwu.edu}
+\ead{s.majhi@gwu.edu}
 \cortext[cor]{Corresponding author.}
 \author[mtu]{Robert Pal}
 \author[mtu]{Atish Mitra}
@@ -37,9 +37,8 @@ characteristic surfaces}
 
 \begin{abstract}
 Whether degraded plant communities respond to contamination smoothly or at
-thresholds decides where remediation effort pays. The standard tools ---
-threshold indicator taxa analysis (TITAN), gradient forest, breakpoints on
-ordination axes --- assemble a community threshold from taxon-level abundance
+thresholds decides where remediation effort pays. The standard tools---threshold indicator taxa analysis (TITAN), gradient forest, breakpoints on
+ordination axes---assemble a community threshold from taxon-level abundance
 change, and so cannot see a community whose taxa rearrange their co-occurrence
 structure while each abundance profile stays put. We summarize co-occurrence
 structure within sliding windows of plots by the Euler characteristic of a
@@ -100,17 +99,17 @@ have written at length on where it is misapplied \citep{baker2013limits}.
 The same observation covers the rest of the standard toolkit. Breakpoint
 regression locates a threshold in a chosen univariate response, classically an
 ordination axis \citep{toms2003piecewise}, so it sees what the ordination
-preserves --- dominant compositional turnover --- and inherits the ordination's
+preserves---dominant compositional turnover---and inherits the ordination's
 indifference to how taxa covary around that turnover. Gradient forest
 \citep{ellis2012gradientforest} aggregates split importances of taxon-level
 response functions, one taxon at a time, and so is taxon-aggregative in the
 same sense TITAN is. None of these methods is wrong; they are instruments
 pointed at taxon-level change. The blind spot they share is a community whose
 taxa keep their individual gradient profiles while rearranging their joint
-structure --- who co-occurs with whom, and how tightly. The summary-free
-statistical route --- nonparametric multivariate change-point detection on
+structure---who co-occurs with whom, and how tightly. The summary-free
+statistical route---nonparametric multivariate change-point detection on
 the raw plot sequence, of which e-divisive is the standard instance
-\citep{matteson2014ediv,james2015ecp} --- covers distributional change in
+\citep{matteson2014ediv,james2015ecp}---covers distributional change in
 principle, but energy statistics at survey-scale $n$ in taxon-space
 dimension turn out to have essentially no power for changes that live in
 the covariance structure, a claim Section~\ref{sec:swap} makes quantitative
@@ -118,19 +117,18 @@ rather than asserts. Section~\ref{sec:titan}
 makes the gap concrete in both directions: on a simulated gradient whose
 correlation structure reorganizes while every marginal abundance distribution
 is held fixed, TITAN returns a handful of scattered, noise-level flags whose
-change points spread across the gradient --- no coherent community threshold
---- while on the converse simulation, an abundance shift with fixed
+change points spread across the gradient---no coherent community threshold---while on the converse simulation, an abundance shift with fixed
 correlation structure, its indicator taxa recover the threshold
 (Section~\ref{sec:titan} reports both instruments on both gradients).
 
-Joint structure is not unstudied territory in ecology --- co-occurrence
+Joint structure is not unstudied territory in ecology---co-occurrence
 network analysis is an established practice, particularly in microbial
 ecology, where network properties are routinely compared across conditions
 and stress gradients \citep{barberan2012networks,faust2012microbial,
 devries2018networks}. That literature is where the present method's substrate
 comes from, and also where its cautionary tale lives: the network summaries
-in common use --- connectance, mean degree, modularity computed on graphs
-thresholded at a fixed similarity --- are exposed to the density confound
+in common use---connectance, mean degree, modularity computed on graphs
+thresholded at a fixed similarity---are exposed to the density confound
 demonstrated in Section~\ref{sec:simfail}, and comparisons across conditions
 are typically descriptive, without an estimator or a significance framework
 for \emph{where} along a gradient the structure changes. What we add to that
@@ -141,8 +139,7 @@ carries signal that the similarity distribution itself does not
 
 We take a different route to the same question. Rather than aggregating
 taxon-level responses, we summarize the \emph{shape} of the community's
-co-occurrence structure with a single integer --- its Euler characteristic ---
-and ask where along the gradient that shape changes. The Euler characteristic is
+co-occurrence structure with a single integer---its Euler characteristic---and ask where along the gradient that shape changes. The Euler characteristic is
 cheap, requires no ordination or distributional assumption, and is stable under
 perturbation of the underlying data \citep{dlotko2023eulercurves}. It has been
 used to summarize time series \citep{sharma2026ecs}, to give regime transition
@@ -155,8 +152,8 @@ same problem in each case; only the substrate differs. One boundary is worth
 drawing before any construction is given: the instrument answers \emph{where}
 along the gradient the community's joint structure changes fastest, and
 whether that change is gradient-associated at all. Whether the change is a
-discontinuity in the strict sense --- the threshold-versus-smooth dichotomy
-of the opening paragraph --- turns out, in our own calibration, to demand
+discontinuity in the strict sense---the threshold-versus-smooth dichotomy
+of the opening paragraph---turns out, in our own calibration, to demand
 more data than the survey designs we study can supply
 (Section~\ref{sec:power}), and we are explicit throughout about that limit.
 
@@ -186,13 +183,11 @@ This paper contributes, in order: (i) the demonstration that similarity-indexed
 topological summaries of co-occurrence structure are connectance measurements in
 disguise, and the connectance-controlled construction that repairs them
 (Sections~\ref{sec:complex}--\ref{sec:connectance}, \ref{sec:simfail});
-(ii) a threshold estimator on the resulting Euler characteristic surface ---
-window rule, change statistic, bootstrap interval, and permutation test ---
-selected on simulated gradients with known thresholds and stated precisely
+(ii) a threshold estimator on the resulting Euler characteristic surface---window rule, change statistic, bootstrap interval, and permutation test---selected on simulated gradients with known thresholds and stated precisely
 enough to be pre-registered, which it is, here, before any field data was seen
 (Section~\ref{sec:est}); (iii) a simulation study giving the estimator's
-recovery error, its power as a function of survey design --- including what
-repeat annual surveys buy, and how they must be used to buy it --- and a
+recovery error, its power as a function of survey design---including what
+repeat annual surveys buy, and how they must be used to buy it---and a
 negative result on a proposed sharpness diagnostic
 (Sections~\ref{sec:simgrad}, \ref{sec:power}); (iv) evidence that the method and taxon-aggregative detection
 are complementary in both directions (Section~\ref{sec:titan}); (v) a real-data application on the incumbent's own
@@ -209,7 +204,7 @@ network (Section~\ref{sec:butte}).
 
 Let $X \in \mathbb{R}_{\ge 0}^{S \times P}$ record the abundance of $S$ taxa
 across $P$ plots, and let $z \in \mathbb{R}^{P}$ give each plot's position on the
-environmental gradient --- here soil metal concentration. Write $X_{\cdot A}$ for
+environmental gradient---here soil metal concentration. Write $X_{\cdot A}$ for
 the submatrix on a plot subset $A$. Everything below is agnostic to the survey's
 specifics; the design guidance in Section~\ref{sec:power} says what $P$ buys.
 
@@ -240,8 +235,8 @@ alternating sum of simplex counts,
 \]
 
 \begin{remark}
-Truncating at $k \le 1$ --- that is, taking the graph itself rather than its
-flag complex --- gives $\chi = V - E$, which for fixed $S$ is an affine
+Truncating at $k \le 1$---that is, taking the graph itself rather than its
+flag complex---gives $\chi = V - E$, which for fixed $S$ is an affine
 function of the edge count. Any apparent signal in such a curve is
 connectance and nothing else. Throughout we compute $\chi$ of the
 $3$-skeleton of the flag complex (cliques of at most four taxa). Toward the
@@ -287,8 +282,8 @@ the Euler characteristic surface over connectance and gradient position. A
 threshold is a location where this surface changes fastest along $z$.
 
 The estimator is fixed as follows, every choice having been made on the
-simulated gradients of Section~\ref{sec:simgrad} --- where the true threshold is
-known --- and none on field data.
+simulated gradients of Section~\ref{sec:simgrad}---where the true threshold is
+known---and none on field data.
 
 \begin{enumerate}
 \item \emph{Windows.} Order the plots by $z$. Windows contain
@@ -321,8 +316,8 @@ reject, as it should.
 each window, recompute the curves, and re-estimate $\hat z$; the 2.5--97.5
 percentile interval over $999$ resamples is the confidence statement. We
 attempted to calibrate the \emph{width} of this interval as a sharpness
-diagnostic --- the hope being that it concentrates on sharp thresholds and
-stays wide under smooth change of the same magnitude --- and the calibration
+diagnostic---the hope being that it concentrates on sharp thresholds and
+stays wide under smooth change of the same magnitude---and the calibration
 failed at survey scale: the widths are indistinguishable at $P \le 80$ and
 only begin to separate at $P = 160$ (Section~\ref{sec:power}). The interval is therefore an uncertainty statement
 only, and the method offers no test of thresholdness; $\hat z$ locates the
@@ -331,8 +326,7 @@ fastest structural change whether or not that change is discontinuous.
 
 The resolution of $\hat z$ is bounded by the window width: with windows
 covering a quarter of the gradient, structure inside $\pm W/2$ of the true
-threshold is mixed by construction, and the simulations bear this out ---
-recovery error tracks window width, not the choice of statistic. Surveys
+threshold is mixed by construction, and the simulations bear this out---recovery error tracks window width, not the choice of statistic. Surveys
 wanting sharper localization need more plots, not a cleverer estimator.
 
 \section{Simulation study}
@@ -341,21 +335,19 @@ wanting sharper localization need more plots, not a cleverer estimator.
 \subsection{Indexing by similarity fails}
 \label{sec:simfail}
 
-Two groups of communities were simulated --- 120 taxa in eight modules, fifteen
-replicate communities per group --- differing in how coherently the modules
+Two groups of communities were simulated---120 taxa in eight modules, fifteen
+replicate communities per group---differing in how coherently the modules
 respond across conditions. Sweeping a fixed similarity grid, edge density alone
 separated the two groups at $\max|\mathrm{Cohen}\ d| = 4.59$, against $2.20$
 for $\chi$ of the flag complex. Subtracting the Erd\H{o}s--R\'enyi expectation
-of $\chi$ at the observed edge count --- a density-matched null --- left the
+of $\chi$ at the observed edge count---a density-matched null---left the
 separation at $2.21$: under a similarity sweep the topological summary carries
 no separation beyond what connectance already supplies.
 
 \subsection{Indexing by connectance isolates structure}
 
 At matched edge counts the comparison inverts. Two point configurations in
-$\mathbb{R}^3$ (Euclidean distance; 120 points, fifteen replicates each) ---
-eight modules placed independently, and the same modules arranged on a cycle
---- have identical connectance at every grid point by construction, and the
+$\mathbb{R}^3$ (Euclidean distance; 120 points, fifteen replicates each)---eight modules placed independently, and the same modules arranged on a cycle---have identical connectance at every grid point by construction, and the
 connectance-indexed $\chi$ separated them at
 $\max|\mathrm{Cohen}\ d| = 4.71$ (Figure~\ref{fig:confound}). Once
 connectance is controlled, the summary responds to arrangement. Whether it
@@ -368,8 +360,7 @@ separate question, taken up in Section~\ref{sec:swap}.
 \caption{The confound and the fix. (a) Under a similarity-indexed sweep,
 plain edge density separates the two simulated communities better than the
 Euler characteristic, and subtracting the density-matched
-Erd\H{o}s--R\'enyi expectation from $\chi$ leaves the same curve ---
-the topological summary is the connectance signal reprocessed.
+Erd\H{o}s--R\'enyi expectation from $\chi$ leaves the same curve---the topological summary is the connectance signal reprocessed.
 (b) Indexing by edge count holds connectance fixed by construction, and two
 configurations with identical density separate on arrangement alone.}
 \label{fig:confound}
@@ -383,7 +374,7 @@ in six modules load on latent factors ($\rho = 0.55$); above the threshold
 $z^\ast = 0.55$, paired modules begin sharing a factor with mixing weight
 $0.7$, so the community reorganizes from six blocks into three super-blocks.
 Critically, every taxon's marginal abundance distribution is identical at every
-gradient position --- unit variance throughout, by construction --- so the
+gradient position---unit variance throughout, by construction---so the
 gradient carries \emph{only} co-occurrence reorganization, the signal the
 methods of Section~\ref{sec:intro} are not built to see. Plots are placed uniformly at
 random on the gradient; designs of $P = 40$, $80$, and $160$ plots use the
@@ -425,7 +416,7 @@ two-segment fit             & 0.204 & 0.184 & 0.161 & 0.30 & 0.31 & 0.30 \\
 \end{table}
 
 The pooled split has the best recovery at the two larger designs and is the
-only statistic whose signal-to-null ordering holds everywhere --- so it is
+only statistic whose signal-to-null ordering holds everywhere---so it is
 the estimator, fixed before any field data. Two observations
 accompany it. At $P = 40$ the separation is marginal for every candidate
 (the pooled split gives 1.59 against a null of 1.50), and detection at that
@@ -452,10 +443,10 @@ $P = 80$ and $0.04$ at $P = 160$. Three readings. False-positive rates lie
 within Monte Carlo error of the nominal level at every size (the standard
 error of a rate near $0.05$ is about $0.03$ at 50 realizations), and the
 selectivity is as designed.
-The absolute power at single-survey scale is modest --- roughly a fifth of
-strong reorganizations detected at 80 plots --- and is reported as a design
+The absolute power at single-survey scale is modest---roughly a fifth of
+strong reorganizations detected at 80 plots---and is reported as a design
 constraint: precisely the switchgrass lesson. And power is
-bought with plots per window --- $0.66$ at $P = 160$ --- which motivates the
+bought with plots per window---$0.66$ at $P = 160$---which motivates the
 two extensions below, because a monitoring network does not need more land
 to reach that regime; it needs its repeat surveys used correctly
 (Figure~\ref{fig:design}).
@@ -474,25 +465,25 @@ noise term and buys nothing (99 permutations, 15 realizations per cell).}
 
 Three further design results follow. First, coverage: the 95\% bootstrap
 percentile interval contained the true threshold in 20 of 20 realizations at
-$P = 80$ (mean width 0.49 of gradient span) --- the interval is conservative,
+$P = 80$ (mean width 0.49 of gradient span)---the interval is conservative,
 erring wide rather than narrow, consistent with the resolution limit rather
 than with over-confidence.
 
-Second, repeat surveys --- the result that decides whether the
+Second, repeat surveys---the result that decides whether the
 Section~\ref{sec:butte} protocol is a fair test. The Butte Hill network has
 roughly 80 plots and has been monitored since 2015, so repeat surveys may
 span up to a decade (the data inventory will confirm how many); we simulated communities
 in which a fraction $\tau = 0.3$ of latent community variance is
 year-specific and asked what $T$ repeat surveys buy. The answer depends
 entirely on how they are used. \emph{Averaging} years within plots buys
-nothing --- power $0.33/0.33/0.27/0.27$ at $T = 1/3/5/10$ --- because
+nothing---power $0.33/0.33/0.27/0.27$ at $T = 1/3/5/10$---because
 averaging cleans each plot's measurement while the binding noise is the
 sampling variability of correlations across the $W$ plots in a window, which
 it cannot touch. \emph{Stacking} plot-years as additional samples attacks
 that term directly: windows carry $W \times T$ columns, the permutation
 moves whole plots so that a plot's years stay together, and power roughly
-doubles --- $0.47$ at $T = 3$ and $0.73$ at $T = 5$, with false-positive
-rates at or below $0.07$ throughout --- before saturating ($0.53$ at
+doubles---$0.47$ at $T = 3$ and $0.73$ at $T = 5$, with false-positive
+rates at or below $0.07$ throughout---before saturating ($0.53$ at
 $T = 10$) as within-plot redundancy bounds the effective sample size. The
 protocol therefore stacks years rather than averaging them, and a
 Butte-scale design with five or more surveys sits in the regime where the
@@ -504,9 +495,9 @@ resamples) the bootstrap interval width on sharp thresholds (mean $0.515$)
 is indistinguishable from its width under smooth change of the same
 magnitude (mean $0.516$): the width is dominated by the resolution limit of
 Section~\ref{sec:est}, not by the shape of the underlying change. At
-$P = 160$ a gap begins to open --- mean $0.440$ against $0.484$, and, more
+$P = 160$ a gap begins to open---mean $0.440$ against $0.484$, and, more
 tellingly, sharp thresholds produce intervals as tight as $0.145$ while
-smooth change never fell below $0.289$ --- so the diagnostic may become
+smooth change never fell below $0.289$---so the diagnostic may become
 usable at design sizes beyond typical surveys, but at the sizes this paper
 addresses we report the interval as uncertainty only. A survey
 hoping to \emph{classify} its gradient response as threshold-like or smooth
@@ -515,13 +506,13 @@ different instrument; what the present method delivers at these sizes is the
 location of fastest change and the evidence that structure is
 gradient-associated at all.
 
-\subsection{The summary is modular --- and when topology is necessary}
+\subsection{The summary is modular---and when topology is necessary}
 \label{sec:swap}
 
 Nothing in the estimator of Section~\ref{sec:est} is specific to the Euler
 characteristic: it consumes any curve-valued summary evaluated on the
 connectance grid. We therefore ran six summaries through the same windows,
-split, and permutation scheme --- $\chi$ of the flag complex; the Betti curves
+split, and permutation scheme---$\chi$ of the flag complex; the Betti curves
 $\beta_0$ and $\beta_1$; greedy modularity of the $m$-edge graph, the summary
 community ecology would reach for first; and two pure
 correlation-distribution summaries, the distance quantile $r(m)$ and the mean
@@ -534,9 +525,9 @@ arrangement change together, so everything detects and nothing is learned
 about attribution. We add two scenarios on a fixed module graph of six
 modules, each carrying exactly two cross-module links of equal weight: a
 \emph{rewiring} gradient, where the module graph switches from two triangles
-to one hexagon at $z^\ast$ --- the degree structure and hence the expected
+to one hexagon at $z^\ast$---the degree structure and hence the expected
 pairwise-correlation distribution are identical on both sides, only the
-arrangement changes --- and a \emph{strength} gradient, where the module
+arrangement changes---and a \emph{strength} gradient, where the module
 graph never changes but the cross-link weight halves at $z^\ast$, which
 moves the correlation distribution while preserving the edge ranking and
 therefore, at matched connectance, the complex itself. One wrinkle is
@@ -560,21 +551,19 @@ realizations (statistics) and 50 realizations at 499 permutations
 than $0.12$, consistent with Section~\ref{sec:power}. Three findings. On
 the \emph{strength} gradient the designed asymmetry is confirmed: the
 distance quantile rejects at $0.34$ while $\chi$ sits near its false-alarm
-rate ($0.12$ against $0.06$) --- matched-connectance summaries are blind to
+rate ($0.12$ against $0.06$)---matched-connectance summaries are blind to
 distribution-only change, and distribution summaries see it, exactly as
-constructed. On the \emph{rewiring} gradient the roles invert --- but
+constructed. On the \emph{rewiring} gradient the roles invert---but
 weakly: the shape summaries' statistics separate from null ($\chi$ 1.74
 against 1.38; modularity 1.97 against 1.46, rejecting at $0.18$ against
 $0.02$) while the distance quantile stays below its null level (1.84
-against 1.98), yet no summary clears $\alpha = 0.05$ reliably ---
-arrangement-only reorganization is the hardest signal in this study, real
+against 1.98), yet no summary clears $\alpha = 0.05$ reliably---arrangement-only reorganization is the hardest signal in this study, real
 in the statistics and beyond dependable detection even at 160 single-survey
 plots. And the transition-window leak declared above is visible: the mean
 pairwise distance rejects rewiring at $0.14$ purely through the mixing of
 regimes in straddling windows. On scenarios where detection occurs,
 matched-connectance modularity is at least as strong as $\chi$ (merge
-statistic $4.28$ against $3.13$; recovery RMSE $0.074$ against $0.102$) ---
-a comparison we report rather than bury, because the framework is
+statistic $4.28$ against $3.13$; recovery RMSE $0.074$ against $0.102$)---a comparison we report rather than bury, because the framework is
 summary-agnostic by design: $\chi$ is retained for its stability guarantee,
 its deterministic clique-count computation, and its published
 transition-localization lineage, not for empirical dominance over its
@@ -607,17 +596,16 @@ The summary-free statistical baseline completes the comparison. E-divisive
 \citep{matteson2014ediv}, run on the raw ordered plot sequences themselves
 (no windows, no summary; \texttt{ecp} with 199 permutations at
 $\alpha = 0.05$), detected the merge gradient in 1 of 10 realizations at
-$P = 80$ --- indistinguishable from its 1-in-10 false-alarm rate on the
-matched null --- and the rewiring gradient in 0 of 10 at both $P = 80$ and
-$P = 160$ --- though Table~\ref{tab:swap} shows that even the shape
+$P = 80$---indistinguishable from its 1-in-10 false-alarm rate on the
+matched null---and the rewiring gradient in 0 of 10 at both $P = 80$ and
+$P = 160$---though Table~\ref{tab:swap} shows that even the shape
 summaries, whose statistics do separate there, fall short of dependable
 rejection on that hardest signal. This is
 the expected behavior of energy statistics at survey-scale sample sizes in
 taxon-space dimension: they are dominated by location alternatives, and a
 change confined to the covariance structure starves them. The ecology
 incumbents fare no better: PERMANOVA and PERMDISP
-\citep{anderson2001permanova}, given the \emph{oracle} split at $z^\ast$ ---
-their best case, since neither localizes --- rejected in 0--2 of 10 runs on
+\citep{anderson2001permanova}, given the \emph{oracle} split at $z^\ast$---their best case, since neither localizes---rejected in 0--2 of 10 runs on
 every scenario, signals and nulls alike (Euclidean distances, 199
 permutations). Both test location and dispersion of sites in dissimilarity
 space, and a reorganization that preserves every plot's marginal
@@ -631,8 +619,8 @@ it is the difference between an instrument and none.
 The claim that the two instrument families see disjoint signals was tested in
 both directions on the simulated gradients, five realizations each at $P=80$.
 On \emph{reorganization} gradients (correlation structure changes at
-$z^\ast$, all marginals fixed), TITAN --- run with 250 permutations, 250
-bootstrap replicates, purity and reliability cutoffs 0.95 --- flagged a median
+$z^\ast$, all marginals fixed), TITAN---run with 250 permutations, 250
+bootstrap replicates, purity and reliability cutoffs 0.95---flagged a median
 of 4 of 60 taxa per run (range 1--9), with per-run median change points
 scattered from 0.26 to 0.85 and \textit{sum(z)} intervals spanning most of the
 gradient: background false flags at roughly the rate the cutoffs admit, and no
@@ -670,7 +658,7 @@ falls out directly: run both, and read disagreement as information about
 an ecological reason to want the covariance channel read at all: the
 early-warning literature on critical transitions holds that changes in
 correlation structure can \emph{precede} the abundance collapses that
-taxon-level methods detect \citep{scheffer2009ews} --- in which case a
+taxon-level methods detect \citep{scheffer2009ews}---in which case a
 structural threshold is a leading indicator, a boundary to act at before
 species are lost rather than after. We note, without claiming it, that on
 the Everglades data our point estimate falls on the early side of TITAN's
@@ -682,12 +670,12 @@ real is exactly what an adequately powered design can test.
 
 \paragraph{A real ecological gradient: the Everglades phosphorus data.}
 The demonstration an MEE reader will weigh most is on the incumbent's own
-ground: the \texttt{glades} dataset shipped with TITAN2 --- 126 marsh sites
+ground: the \texttt{glades} dataset shipped with TITAN2---126 marsh sites
 by 164 macroinvertebrate taxa along a measured surface-water
 total-phosphorus gradient, the demonstration data of \citet{baker2010titan}.
 At $P = 126$ the window rule gives 32-site windows. The estimator is applied
-as fixed on simulation before this dataset was first analyzed; preprocessing --- taxa in at
-least five sites, $\log(1+\text{abundance})$, gradient ordered by TP --- was
+as fixed on simulation before this dataset was first analyzed; preprocessing---taxa in at
+least five sites, $\log(1+\text{abundance})$, gradient ordered by TP---was
 fixed before outcomes were seen. One departure from Section~\ref{sec:est}:
 for computational cost the test used 199 rather than 999 permutations and
 the interval 199 bootstrap resamples; the Monte Carlo standard error of a
@@ -709,15 +697,15 @@ single-survey sites sit between the $P = 80$ and $P = 160$ rows of
 Section~\ref{sec:power} (rejection $0.18$ and $0.66$ for a strong simulated
 effect), so the run bounds the co-occurrence signal in these data rather
 than refuting one. An exploratory run of the anchored secondary test of
-Section~\ref{sec:butte} on these data --- performed after the primary
-result was seen, and labeled accordingly --- also does not reject ($D = 0.99$
+Section~\ref{sec:butte} on these data---performed after the primary
+result was seen, and labeled accordingly---also does not reject ($D = 0.99$
 at the boundary nearest TITAN's decliner point, $p = 0.38$): the
 non-detection is not merely the multiplicity cost of the free split. What
 the run does establish, on the incumbent's own benchmark:
 the frozen pipeline executes end to end at real survey scale, its point
 estimate lands where the taxon-level evidence and the regulatory criterion
 place the threshold region, and the verdict of a pre-registered test is
-reported as such --- the discipline Section~\ref{sec:butte} commits to for
+reported as such---the discipline Section~\ref{sec:butte} commits to for
 Butte Hill, where stacked repeat surveys supply the power this
 single-survey design lacks. Figure~\ref{fig:glades} shows the run
 whole: the standardized window curves climb through the regulatory range,
@@ -740,8 +728,7 @@ the figure is reported as description, not detection.}
 \paragraph{Public omics data as stress tests.}
 No public vegetation survey known to us pairs a plot network with a measured
 contamination gradient at the scale Section~\ref{sec:butte} describes, so the
-pipeline's remaining validation used two public transcriptomic datasets ---
-the construction is agnostic to what the ``taxa'' are, and co-expression
+pipeline's remaining validation used two public transcriptomic datasets---the construction is agnostic to what the ``taxa'' are, and co-expression
 gives it exactly the matrix shape of Section~\ref{sec:data} at realistic size and
 noise. Both results bound what the pipeline can claim; neither supports it,
 and we report them because the failure modes they exposed shaped the
@@ -755,18 +742,18 @@ flowering time gave $\max|\mathrm{Cohen}\ d| = 1.61$ with $p = 0.040$ over 199
 label permutations, against a heavy-tailed null reaching $2.63$. We read this
 as a hint at best: nothing was pre-registered, the statistic maximizes over the
 grid (the instability Section~\ref{sec:est} now avoids), and the assay is a
-single condition --- there is no environmental axis, so the surface degenerates
+single condition---there is no environmental axis, so the surface degenerates
 to one curve and the dataset structurally cannot test the claim.
 
 \paragraph{With an ordered axis, no detection.} Switchgrass under
 drought and re-watering \citep{meyer2014switchgrass} provides an ordered diel
 axis. Separations between control and drought across the axis were $0.51$,
-$2.26$, $0.30$ and $0.27$ --- a localized peak of the shape the method
-predicts --- but against $199$ permutations of treatment label within time
+$2.26$, $0.30$ and $0.27$---a localized peak of the shape the method
+predicts---but against $199$ permutations of treatment label within time
 point, preserving cell sizes, neither the peak ($p = 0.135$) nor its variation
 along the axis ($p = 0.115$) was significant, with a null ranging to $4.26$.
 We therefore report no detection. The design is underpowered rather than the
-effect shown absent --- six to thirteen samples per cell (most six to eight),
+effect shown absent---six to thirteen samples per cell (most six to eight),
 and a max-statistic
 whose null spans $0.59$--$4.26$ is exactly the small-sample failure that
 motivated the pooled statistic and the power analysis of
@@ -782,8 +769,7 @@ monitored more than eighty long-term restoration sites across roughly six
 hundred acres of the Butte Hill Superfund landscape since 2015: vegetation
 surveys, soil chemistry, portable-XRF elemental screening, and multi-year
 monitoring under real reclamation constraints. That is a taxa-by-plot
-abundance matrix with plots orderable by measured soil metal concentration ---
-the data shape of Section~\ref{sec:data}, with the gradient already in hand.
+abundance matrix with plots orderable by measured soil metal concentration---the data shape of Section~\ref{sec:data}, with the gradient already in hand.
 
 This section is a protocol, not a result, and we commit to it before seeing
 outcomes. The estimator is exactly Section~\ref{sec:est}, with no free
@@ -795,21 +781,20 @@ per Section~\ref{sec:titan}. We pre-register one named secondary test in
 addition to the primary free-split test: the pooled statistic $D(s)$
 evaluated at the single split whose boundary lies nearest TITAN's decliner
 change point on the same matrix, against the same plot-position permutation
-null. Because TITAN's change point derives from the marginal channel ---
-independent of ours by the results of Section~\ref{sec:titan} --- anchoring
+null. Because TITAN's change point derives from the marginal channel---independent of ours by the results of Section~\ref{sec:titan}---anchoring
 the split there spends no degrees of freedom of the covariance channel, and
 the single-look test avoids the multiplicity cost of the free split. It is
 the complementarity thesis run as a confirmatory test: \emph{does the
 structure rewire where the marginals say the sensitive species exit?} A recovered threshold will be checked against
-independent instruments the project already tracks --- soil chemistry
-breakpoints, diversity indices, and restoration outcomes --- and against the
+independent instruments the project already tracks---soil chemistry
+breakpoints, diversity indices, and restoration outcomes---and against the
 power table of Section~\ref{sec:power} before any claim is made; if the design
 is in the regime where the test cannot reject, we will say so rather than
 report a point estimate without evidence. The decade of repeat surveys is
 load-bearing here: at 80 plots in a single survey year the test is weak, and
 the multi-year analysis of Section~\ref{sec:power} shows that repeat
-surveys restore power only when \emph{stacked} --- plot-years as additional
-window columns, permutation moving whole plots --- and not when averaged.
+surveys restore power only when \emph{stacked}---plot-years as additional
+window columns, permutation moving whole plots---and not when averaged.
 The protocol therefore stacks years, and the number of surveyed years is
 the first item of the data inventory.
 
@@ -826,7 +811,7 @@ The method locates where community co-occurrence structure reorganizes along a
 gradient; it does not identify which taxa drive the reorganization, which is
 precisely what TITAN does well. Section~\ref{sec:titan} shows the
 complementarity is real and runs in both directions, so the recommendation is
-to report the two together --- and to treat their disagreement as a
+to report the two together---and to treat their disagreement as a
 measurement of what kind of change the gradient drives, not as a conflict to
 be resolved.
 
@@ -842,27 +827,27 @@ realistic design sizes (Section~\ref{sec:power}), so the method currently
 distinguishes \emph{where} structure changes fastest, not whether the change
 is discontinuous. A test of sharpness compatible with the connectance control
 is an open problem we consider worth having; the most promising route we see
-is a joint comparison of adjacent windows --- representing taxa by their
+is a joint comparison of adjacent windows---representing taxa by their
 correlation profiles so that all windows share one ambient space, then
 measuring their overlap directly with an intersection Euler characteristic
 profile and certifying separation with an exact ambient-dimension test
-\citep{majhi2026regime} --- which we leave to a dedicated follow-up rather
+\citep{majhi2026regime}---which we leave to a dedicated follow-up rather
 than a second device here. Third, localization resolution is set by the window
 width, hence by survey size; the power analysis of Section~\ref{sec:power} is
 the price list, and the public-data negative in
 Section~\ref{sec:public} is what paying insufficient attention to it looks
 like. Fourth, the permutation test treats plots as exchangeable along the
 gradient. Where community structure is spatially autocorrelated and the
-gradient is spatially structured --- as a smelter plume makes it on Butte
-Hill --- the test is anti-conservative, and restricted permutations within
+gradient is spatially structured---as a smelter plume makes it on Butte
+Hill---the test is anti-conservative, and restricted permutations within
 spatial blocks are the appropriate remedy; we did not need them for the
 simulations or the Everglades sites, but a field application should check
 residual spatial structure first.
 
 The Euler characteristic itself is a choice, not a commitment. The
-contributions this paper actually rests on --- the connectance confound and
+contributions this paper actually rests on---the connectance confound and
 its control, the window--split--permutation machinery, and the
-complementarity results --- are summary-agnostic, and Section~\ref{sec:swap}
+complementarity results---are summary-agnostic, and Section~\ref{sec:swap}
 runs the identical estimator over Betti curves, modularity, and distribution
 summaries. What $\chi$ specifically buys is an integer computable by clique
 counting with no persistence computation, a stability guarantee
@@ -876,7 +861,7 @@ test on a new gradient is never ``the Euler characteristic matters'' but
 signal at matched connectance is admissible evidence.
 
 The construction extends naturally where several measurement types exist on
-the same plots --- vegetation, soil chemistry, molecular data --- by fusing
+the same plots---vegetation, soil chemistry, molecular data---by fusing
 per-modality distance matrices with multiple kernel learning, which is mature
 technology \citep{mariette2018mixkernel} and, in the form used in the
 motivating pipe-flow work, inherits the stability of its topological
