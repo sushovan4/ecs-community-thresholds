@@ -80,3 +80,47 @@ matrices); Blackbird Mine, NF Clear Creek, Pomeranz NZ (too few sites).
 Order of execution follows the table. D6 and D7 depend on a public DataONE
 mirror of EDI, which since July 2026 requires login for direct access; if the
 mirror refuses, they are reported as excluded (inaccessible) under rule 1.
+
+---
+
+## Amendment 1 — 2026-09-19, after download, before any estimator was run
+
+Recorded from file headers and structural counts only (units, visits,
+years, taxon counts, field names, analyte names). No gradient association,
+curve, or test statistic had been computed for any dataset.
+
+**General (all datasets).**
+- **Taxon cap for computability.** The flag-complex computation counts
+  cliques in a graph with up to half of all taxon pairs as edges; above
+  roughly 150 taxa this is infeasible at these unit counts. Where more than
+  100 taxa pass rule 4, the 100 taxa present in the most units are kept
+  (ties broken alphabetically). The choice uses occurrence only, never the
+  gradient. This is itself recorded as a limit of the method.
+- Units lacking a gradient measurement are dropped; columns (visits) lacking
+  community data are dropped.
+
+**D1 NRSA 2018-19.** Unit UNIQUE_ID; one column per visit (UID); abundance
+TOTAL300 (fixed 300-count subsample) for rows with IS_DISTINCT300 = 1; taxon
+TARGET_TAXON. z = COND_RESULT per visit, averaged per unit. Both sample types
+(BERW, BETB) kept; each site has one. Region: AG_ECO9.
+**D2** as D1 with AG_ECO9 in {NAP, SAP}; region for rule 7: STATE.
+**D3 EMAP MAHA.** Unit STRM_ID; one column per (STRM_ID, YEAR, VISIT_NO),
+abundance ABUND summed over that visit's samples (pool and riffle), rows with
+DISTINCT = Y; taxon TAXANAME. z = COND per visit, averaged per unit. Region
+for rule 7: the two-letter state prefix of STRM_ID (no ecoregion field).
+**D4 NCCA 2015 estuarine.** Unit SITE_ID; one column per UID; abundance TOTAL
+for IS_DISTINCT = 1; taxon TARGET_TAXON. z = CU (ug/dry g) per UID, averaged
+per unit. Region: NCCA_REG.
+**D5 NLA 2017.** Unit SITE_ID; one column per UID; abundance TOTAL for
+IS_DISTINCT = 1; taxon TARGET_TAXON. z = PTL (total phosphorus) per UID,
+averaged per unit. Region: AG_ECO9 from the site file.
+**D6 Cedar Creek e001.** Unit (Field, Plot); one column per (unit, Year);
+abundance Biomass (g/m2); taxon Species, excluding non-taxon categories
+(names containing litter, miscellaneous, moss, lichen, fungi, unsorted, or
+total, case-insensitive). z = NAdd. Region: Field. Fence removal (2004) and
+burning regimes are not modeled and are reported as confounders.
+**D7 Niwot Saddle.** Unit plot (1-88); one column per (plot, year);
+abundance = point-intercept hit count per USDA_code; non-plant codes
+(beginning with "2", e.g. litter, rock, bare ground) excluded. z = mean of
+mean_depth at the matching snow stake (point_ID = plot) over all dates.
+No region field.
