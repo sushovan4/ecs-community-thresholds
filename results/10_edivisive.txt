@@ -1,0 +1,6 @@
+   THRESH P= 80: detected  1/10   first-cp gradient position: median 0.52 range 0.52-0.52   (true z* = 0.55)
+ STRENGTH P= 80: detected  1/10   first-cp gradient position: median 0.56 range 0.56-0.56   (true z* = 0.55)
+   REWIRE P= 80: detected  0/10   (true z* = 0.55)
+ TRI_NULL P= 80: detected  1/10   first-cp gradient position: median 0.56 range 0.56-0.56   (true z* = 0.55)
+   REWIRE P=160: detected  0/10   (true z* = 0.55)
+ TRI_NULL P=160: detected  0/10   (true z* = 0.55)

@@ -1,0 +1,30 @@
+S=60 rho=0.75 a_hi=0.9 z*=0.55  P=80, windows 20 stride 6, 100 realisations
+estimator: pre-registered split_mean of 06, per summary
+
+ summary    REWIRE  STRENGTH  TRI_NULL    THRESH      NULL  RMSE(REWIRE)  RMSE(THRESH)
+     chi      1.55      1.63      1.53      2.24      1.55         0.227         0.158
+  betti0      1.35      1.61      1.64      0.98      0.49         0.221         0.207
+  betti1      1.04      1.13      1.05      1.04      0.88         0.246         0.205
+   modul      1.66      1.82      1.75      2.69      1.56         0.207         0.127
+      rq      1.94      2.18      2.03      3.27      2.15         0.210         0.144
+   meand      2.31      2.67      2.47      3.39      2.57         0.206         0.165
+
+columns are the mean split_mean statistic per scenario;
+REWIRE holds the correlation distribution fixed across z* by
+construction, so distribution summaries (rq, meand) should sit at
+their TRI_NULL level there while shape summaries separate.
+S=60 rho=0.75 a_hi=0.9 z*=0.55  P=160, windows 40 stride 13, 100 realisations
+estimator: pre-registered split_mean of 06, per summary
+
+ summary    REWIRE  STRENGTH  TRI_NULL    THRESH      NULL  RMSE(REWIRE)  RMSE(THRESH)
+     chi      1.74      1.71      1.38      3.13      1.67         0.160         0.102
+  betti0      2.11      2.10      1.91      1.80      0.69         0.182         0.155
+  betti1      1.52      1.24      1.38      1.34      1.03         0.187         0.141
+   modul      1.97      2.23      1.46      4.28      1.63         0.147         0.074
+      rq      1.84      2.80      1.98      3.48      1.87         0.206         0.103
+   meand      2.42      2.94      2.34      3.85      2.22         0.190         0.141
+
+columns are the mean split_mean statistic per scenario;
+REWIRE holds the correlation distribution fixed across z* by
+construction, so distribution summaries (rq, meand) should sit at
+their TRI_NULL level there while shape summaries separate.

@@ -1,0 +1,6 @@
+bootstrap CI width of z-hat (split_mean), 200 resamples, 50 realisations per cell
+
+   P= 80  THRESH  CI width mean 0.515  range 0.417-0.605
+   P= 80  SMOOTH  CI width mean 0.516  range 0.354-0.605
+   P=160  THRESH  CI width mean 0.440  range 0.145-0.566
+   P=160  SMOOTH  CI width mean 0.484  range 0.289-0.566

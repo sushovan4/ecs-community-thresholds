@@ -1,0 +1,16 @@
+bootstrap CI width of z-hat (split_mean), 50 resamples, 15 realisations, P=80
+
+   THRESH  CI width mean 0.525  range 0.440-0.590
+   SMOOTH  CI width mean 0.527  range 0.440-0.590
+
+permutation test (split_mean statistic), 99 shuffles of plot positions, 20 realisations per cell, alpha = 0.05
+
+ plots  window  scenario  rejection rate
+    24       6    THRESH            0.15
+    24       6      NULL            0.00
+    40      10    THRESH            0.05
+    40      10      NULL            0.05
+    80      20    THRESH            0.20
+    80      20      NULL            0.00
+    80      20     ABUND            0.00
+[total 6298s]

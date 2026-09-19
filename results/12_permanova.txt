@@ -1,0 +1,12 @@
+Warning messages:
+1: package ‘vegan’ was built under R version 4.5.2 
+2: package ‘permute’ was built under R version 4.5.1 
+oracle-split two-group tests at z*=0.55, Euclidean, 199 permutations
+
+ scenario     P  rejections/10: PERMANOVA  PERMDISP
+   THRESH    80                            0         1
+ STRENGTH    80                            1         0
+   REWIRE    80                            1         0
+ TRI_NULL    80                            1         0
+   REWIRE   160                            1         0
+ TRI_NULL   160                            2         0

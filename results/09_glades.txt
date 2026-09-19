@@ -1,0 +1,5 @@
+164 taxa x 126 sites, TP 2.5-169.5 ug/L
+windows of 32 sites, stride 11, m in [110, 6683]
+
+ chi: z-hat = 12.5 ug/L TP   stat 1.76   p = 0.300 (199 perms)   95% CI [12.0, 45.3] (199 boots)   [27575s]
+  rq: z-hat = 16.9 ug/L TP   stat 1.71   p = 0.365 (199 perms)   95% CI [11.9, 44.0] (199 boots)   [9s]

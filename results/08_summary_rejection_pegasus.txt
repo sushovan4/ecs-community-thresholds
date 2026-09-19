@@ -1,0 +1,18 @@
+permutation rejection at alpha=0.05, 499 shuffles, 50 realisations per cell
+
+-- P=80, windows of 20
+ summary    REWIRE  STRENGTH  TRI_NULL
+     chi      0.06      0.08      0.08
+  betti0      0.10      0.10      0.10
+  betti1      0.06      0.04      0.06
+   modul      0.08      0.12      0.04
+      rq      0.02      0.08      0.04
+   meand      0.02      0.04      0.06
+-- P=160, windows of 40
+ summary    REWIRE  STRENGTH  TRI_NULL
+     chi      0.08      0.12      0.06
+  betti0      0.14      0.08      0.08
+  betti1      0.02      0.02      0.06
+   modul      0.18      0.14      0.02
+      rq      0.08      0.34      0.04
+   meand      0.14      0.16      0.02

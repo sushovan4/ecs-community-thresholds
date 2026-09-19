@@ -1,0 +1,21 @@
+150 genes x 119 samples   (from 35352 isogroups)
+
+cell sizes at day 14:
+tod        5AM  10AM  12PM  2PM
+treatment                      
+control      8     6     7    7
+drought     13     7     6    6
+recovery     0     7     6    6 
+
+observed max |Cohen d|, control vs drought, by time of day:
+     5AM   0.51
+    10AM   2.26
+    12PM   0.30
+     2PM   0.27
+   range across the axis = 1.99   [33s]
+
+null over 199 treatment-label shuffles within time point:
+   max|d|  mean 1.61, range 0.59-4.26   -> p = 0.135   (is drought separable at all?)
+   spread  mean 1.16, range 0.08-3.61   -> p = 0.115   (does it REORGANIZE along the axis?)
+
+[total 8326s]

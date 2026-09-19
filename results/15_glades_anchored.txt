@@ -1,0 +1,7 @@
+164 taxa x 126 sites, TP 2.5-169.5 ug/L
+windows of 32 sites, stride 11, m in [110, 6683]
+
+windows at [ 7.6 10.8 14.3 19.5 25.5 32.8 40.4 49.6 65.5]
+anchored split s0=3: boundary midpoint 16.9 ug/L (TITAN decliner cp 15.1)
+anchored D = 0.99   p = 0.375 (199 perms)   [3662s]
+EXPLORATORY -- see docstring; confirmatory version lives in the Butte protocol.

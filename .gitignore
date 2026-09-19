@@ -1,0 +1,24 @@
+# Bulk inputs: fetched from the original sources, never redistributed here.
+data/*
+!data/fetch.sh
+
+# Result logs and exported figure data ARE tracked -- they are the evidence.
+# Only bulk or regenerable binaries are excluded.
+results/*.npy
+results/*.npz
+results/*.pkl*
+
+__pycache__/
+*.pyc
+.DS_Store
+
+# LaTeX build artifacts
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out
+paper/*.pdf
+paper/*.fdb_latexmk
+paper/*.fls
+paper/*.synctex.gz

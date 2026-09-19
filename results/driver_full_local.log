@@ -1,0 +1,6 @@
+driver: NCPU=24 NPERM=499 NBOOT=200
+recovery done [364s]
+bootstrap done [1792s]
+power done [10633s]
+swap recovery done [12818s]
+all done [41724s]

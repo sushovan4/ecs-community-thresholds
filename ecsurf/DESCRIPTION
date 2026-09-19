@@ -1,0 +1,14 @@
+Package: ecsurf
+Title: Connectance-Indexed Euler Characteristic Surfaces Along Environmental Gradients
+Version: 0.1.0
+Authors@R: person("Sushovan", "Majhi", email = "s.majhi@email.gwu.edu", role = c("aut", "cre"))
+Description: Locates where community co-occurrence structure reorganizes along
+    an environmental gradient, using the pre-registered estimator of Majhi et
+    al.: Euler characteristic curves of flag complexes indexed by edge count
+    (connectance fixed by construction), a pooled two-sample split statistic,
+    a plot-position permutation test, and a within-window bootstrap interval.
+    Thin wrapper over the reference Python implementation via reticulate;
+    requires Python with numpy, scipy, and gudhi.
+License: MIT + file LICENSE
+Imports: reticulate
+Encoding: UTF-8

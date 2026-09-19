@@ -1,0 +1,63 @@
+S=60 modules=6 rho=0.55 a_hi=0.7 z*=0.55
+P=40 plots, windows of 10 stride 3, m in [40, 900], 100 realisations
+
+-- THRESH  (true z* = 0.55)
+        deriv  stat   3.18   bias -0.012   RMSE 0.228   z-hat sd 0.229
+        split  stat   3.11   bias -0.024   RMSE 0.204   z-hat sd 0.203
+        break  stat   0.30   bias -0.006   RMSE 0.204   z-hat sd 0.205
+   split_mean  stat   1.59   bias -0.000   RMSE 0.203   z-hat sd 0.204
+
+-- SMOOTH
+        deriv  stat   3.09   z-hat sd 0.232
+        split  stat   3.02   z-hat sd 0.215
+        break  stat   0.28   z-hat sd 0.207
+   split_mean  stat   1.50   z-hat sd 0.213
+
+-- NULL
+        deriv  stat   3.10   z-hat sd 0.219
+        split  stat   3.07   z-hat sd 0.213
+        break  stat   0.28   z-hat sd 0.215
+   split_mean  stat   1.50   z-hat sd 0.216
+
+S=60 modules=6 rho=0.55 a_hi=0.7 z*=0.55
+P=80 plots, windows of 20 stride 6, m in [40, 900], 100 realisations
+
+-- THRESH  (true z* = 0.55)
+        deriv  stat   3.16   bias -0.031   RMSE 0.226   z-hat sd 0.225
+        split  stat   4.85   bias +0.042   RMSE 0.170   z-hat sd 0.166
+        break  stat   0.30   bias -0.018   RMSE 0.184   z-hat sd 0.184
+   split_mean  stat   2.15   bias +0.034   RMSE 0.160   z-hat sd 0.157
+
+-- SMOOTH
+        deriv  stat   3.10   z-hat sd 0.225
+        split  stat   3.83   z-hat sd 0.197
+        break  stat   0.31   z-hat sd 0.179
+   split_mean  stat   1.78   z-hat sd 0.202
+
+-- NULL
+        deriv  stat   3.13   z-hat sd 0.205
+        split  stat   3.32   z-hat sd 0.217
+        break  stat   0.30   z-hat sd 0.187
+   split_mean  stat   1.51   z-hat sd 0.205
+
+S=60 modules=6 rho=0.55 a_hi=0.7 z*=0.55
+P=160 plots, windows of 40 stride 13, m in [40, 900], 100 realisations
+
+-- THRESH  (true z* = 0.55)
+        deriv  stat   2.99   bias +0.033   RMSE 0.218   z-hat sd 0.216
+        split  stat   6.38   bias +0.041   RMSE 0.120   z-hat sd 0.114
+        break  stat   0.31   bias -0.034   RMSE 0.161   z-hat sd 0.159
+   split_mean  stat   2.87   bias +0.038   RMSE 0.103   z-hat sd 0.097
+
+-- SMOOTH
+        deriv  stat   2.94   z-hat sd 0.229
+        split  stat   4.80   z-hat sd 0.176
+        break  stat   0.30   z-hat sd 0.168
+   split_mean  stat   2.18   z-hat sd 0.185
+
+-- NULL
+        deriv  stat   3.06   z-hat sd 0.232
+        split  stat   3.38   z-hat sd 0.193
+        break  stat   0.30   z-hat sd 0.171
+   split_mean  stat   1.40   z-hat sd 0.190
+

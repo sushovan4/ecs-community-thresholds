@@ -1,0 +1,9 @@
+150 genes x 690 accessions matched to FT16
+FT16 32-144 d, median 69
+
+observed  max |Cohen d| = 1.61 at 569 edges   [1s]
+permuted  max |Cohen d| = 0.85 mean, 0.20-2.63 range over 199 label shuffles
+
+empirical p = 0.040    [total 145s]
+
+[exited with code 0]

@@ -1,0 +1,13 @@
+permutation test (split_mean), 499 shuffles, 50 realisations per cell, alpha = 0.05
+
+ plots  window  scenario  rejection rate
+    24       6    THRESH            0.00
+    24       6      NULL            0.08
+    40      10    THRESH            0.08
+    40      10      NULL            0.02
+    80      20    THRESH            0.18
+    80      20      NULL            0.02
+    80      20     ABUND            0.00
+   160      40    THRESH            0.66
+   160      40      NULL            0.06
+   160      40     ABUND            0.04

@@ -1,0 +1,14 @@
+simulation, P=80, 30 realizations, split_mean
+ grid  THRESH stat  NULL stat    bias   RMSE
+    6         2.15       1.33  -0.006  0.149
+   12         2.23       1.36  -0.003  0.152
+   24         2.25       1.37  +0.017  0.146
+164 taxa x 126 sites, TP 2.5-169.5 ug/L
+windows of 32 sites, stride 11, m in [110, 6683]
+
+
+glades observed estimate
+ grid   z-hat   stat
+    6    12.5   1.85
+   12    12.5   1.76
+   24    12.5   1.65
