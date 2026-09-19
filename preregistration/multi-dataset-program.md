@@ -53,6 +53,30 @@ Ambiguities met in a specific dataset are resolved by the nearest rule and
 recorded in a dated per-dataset amendment committed before its estimator
 runs.
 
-## Candidate list
+## Candidate list — fixed 2026-09-19, before any of these files was downloaded
 
-(appended before any download; see amendments below)
+Gradients were chosen from landing pages and metadata only. "Region" names
+the field used for the rule-7 within-region test.
+
+| # | Dataset | Units | Gradient z | Region field |
+|---|---|---|---|---|
+| D1 | EPA NRSA 2018-19 benthic macroinvertebrate counts + water chemistry (national) | site (UNIQUE_ID); within-cycle revisits stacked | specific conductance (uS/cm) | EPA 9 aggregate ecoregions |
+| D2 | D1 restricted to the Appalachian aggregate ecoregions (northern + southern Appalachians), the coal-mining conductivity question | as D1 | specific conductance | none (single region pair; rule 7 via state if present) |
+| D3 | EPA EMAP Mid-Atlantic Highlands streams 1993-96, benthic counts + chemistry (acid mine drainage region) | site; revisits stacked | specific conductance | ecoregion or state field if present |
+| D4 | EPA NCCA 2015 estuarine benthic counts + sediment chemistry | site | sediment copper (dry weight); zinc if copper is not reported | NCCA region/province |
+| D5 | EPA NLA 2017 lake benthic counts + water chemistry | lake site; revisits stacked | total phosphorus | EPA 9 aggregate ecoregions |
+| D6 | Cedar Creek e001 aboveground biomass by species (knb-lter-cdr.14) | plot; years stacked | N addition rate (g N m-2 yr-1) | field (A-D) |
+| D7 | Niwot Ridge Saddle grid plant composition (knb-lter-nwt.93) + Saddle snow depth (knb-lter-nwt.31) | 1 m2 plot; years stacked | mean snow depth at the plot's grid point | none |
+
+Considered and not included, with reason: England EA BIOSYS (chemistry in a
+separate archive, joining rules not fixable from metadata); Konza PVC02
+(treatment replicated at watershed level only); Park Grass (registration
+required, factorial non-monotone treatments); Chesapeake benthos (fixed
+stations likely < 40); SCCWRP Bight, Swedish MVM, CABIN, ECCC oil sands
+(access or chemistry linkage unconfirmed); WV DEP, MBSS, Clark Fork,
+Arkansas River, Sudbury, Harjavalta (not publicly archived as community
+matrices); Blackbird Mine, NF Clear Creek, Pomeranz NZ (too few sites).
+
+Order of execution follows the table. D6 and D7 depend on a public DataONE
+mirror of EDI, which since July 2026 requires login for direct access; if the
+mirror refuses, they are reported as excluded (inaccessible) under rule 1.
