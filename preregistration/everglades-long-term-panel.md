@@ -39,3 +39,40 @@ single-survey power point (0.66), with ~20 years available to stack.
 Ambiguities discovered in the files are resolved by the nearest rule above;
 any decision not covered here will be recorded in this file BEFORE the
 estimator is run, in a follow-up commit.
+
+---
+
+## Amendment 1 — 2026-09-19, before any test was run
+
+Recorded after downloading the data and reading only its README and
+structural summaries (row, site, year, and taxon counts; missing values).
+No gradient association, window curve, or test statistic had been computed.
+Each item resolves an ambiguity by the nearest rule above.
+
+1. **Site unit (rule 1).** In the CERP program the `SITE` field has 34 values,
+   each a cluster of numbered sampling points (`PLOT` = primary sampling
+   unit, PSU). The "~146-site" annual panel of the source paper is the set of
+   PSUs: 148 PSUs (key REGION_SITE_PLOT), 2005-2024, median 19 survey years.
+   The PSU is the site unit; P = 148.
+2. **File and taxa (rule 3).** `Everglades-insect-community-data.csv`, whose 26
+   taxon columns (COLEOPTERA ... EPITHECA) are non-overlapping. Excluded:
+   `Richness` and `Abund` (summaries) and the other file, whose aggregate
+   columns (HETEROPTERA, ODONATA, INSECTS, ...) would double-count. The
+   presence rule counts PSUs.
+3. **Column (rule 2).** One column per PSU-year: summed abundance over that
+   PSU-year's rows divided by summed `THROW`, then log(1 + x).
+4. **Gradient (rule 4a).** `DSLDD` (days since the site was last dry) is the
+   hydroperiod variable; z = PSU mean of DSLDD over its survey years. No
+   values are missing, so rule 4b is not reached.
+5. **Windows and resampling (rules 5-7).** W = round(148/4) = 37 PSUs, stride
+   12; a window carries every PSU-year of its PSUs. The permutation permutes
+   PSU z-values with years attached; the bootstrap resamples PSUs within a
+   window with all their years. Implementation: `ecsurf.estimate_threshold`
+   with `groups` = PSU, the released code.
+6. **Secondary test (rule 7).** TITAN2 with the settings of
+   `09_glades_titan.R` (minSplt 5, 250 permutations, 250 bootstraps, purity
+   and reliability 0.95) on PSU-mean densities (not log-transformed, as for
+   the Everglades benchmark) against z; the anchored split is the window
+   boundary nearest TITAN's sum(z-) change point.
+7. **Robustness panel (rule 1).** The 24-site MWD panel is deferred until the
+   primary result is recorded.
