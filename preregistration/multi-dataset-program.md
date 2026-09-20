@@ -168,3 +168,36 @@ within a water year), z = the occasion's decimal date, columns = plot
 samples within the occasion, all other rules unchanged. Inclusion still
 requires 40+ occasions, 40+ columns, 15+ taxa. The year-level results
 already obtained are reported unchanged beside these.
+
+---
+
+## Amendment 3 — 2026-09-19, dataset D8, before download
+
+Added after the operating range of the paper's Section 3.5 was measured, and
+chosen to match it: quantitative percent cover rather than sparse counts,
+thousands of units, and a gradient along which a sharp transition is
+ecologically expected. Registered before any CRMS file was downloaded.
+
+| # | Dataset | Units | Gradient z | Region field |
+|---|---|---|---|---|
+| D8 | Coastwide Reference Monitoring System (CRMS), coastal Louisiana marsh vegetation (`CRMS_Marsh_Vegetation.zip` from cims.coastal.la.gov) | vegetation station (site x station), station-years stacked | soil porewater salinity or specific conductance at the shallowest reported depth, station mean over years (`CRMS_Soil_Properties`) | CRMS hydrologic basin |
+
+All rules of this registration and amendment 1 apply unchanged: percent cover
+per species per station-year is the column value, log(1+x); taxa present in
+at least 5 stations, capped at the 100 most widespread; windows of P/4 units;
+199 permutations and bootstrap resamples; the within-region permutation is a
+registered secondary test because marsh salinity is strongly spatially
+structured; TITAN on station-mean cover for comparison.
+
+**Fallback fixed in advance.** If porewater salinity is not reported per
+vegetation station (only per site, or on a different station set that cannot
+be joined by the identifiers present), the gradient becomes station elevation
+(ft NAVD88) from the USGS release
+`CRMS_2014_Vegetation_Station_Elevation_Data.csv`, and that substitution is
+recorded in a dated amendment before the estimator runs. No other gradient
+variable will be tried, and the dataset is analyzed once.
+
+**Declared risk.** Louisiana marshes are often near-monodominant, so despite
+being quantitative, the cover matrix may be zero-heavy; per the operating
+range that would lower power. The analysis is run coastwide, not restricted
+to a basin, and the outcome is reported either way.
