@@ -267,3 +267,42 @@ instrument, not a replacement of the record.
 Expectation, recorded in advance: the analyzed matrices have 70%-96% zeros
 (4%-30% occupancy), which the simulations place at or below the regime where
 the new estimator reaches power 0.47, so most are expected to remain null.
+
+---
+
+## Amendment 6 — 2026-09-19, the two-stage ordering test
+
+Registered before the second-pass results for the independent spatial
+datasets exist (D1 and D5 were running when this was written; D2, D3, D4 had
+not started, and no ordering statistic has been computed for any dataset).
+
+**Motivation.** Amendment 2A registered a cross-dataset ordering test that
+required at least four detecting datasets and was reported as underpowered
+when only one detected. The second-generation estimator detects far more
+often, so the test may become runnable. But detection and localization are
+different jobs, and the interaction statistic's located split moved between
+split grids on the Everglades panel, so the ordering must not rest on it
+until its localization is characterized.
+
+**The procedure, fixed now.**
+1. **Detection** is decided by the intersection-ECP test of amendment 5
+   (p <= 0.05 on the registered 199-permutation test; where a region field
+   exists, the within-region test must also reject).
+2. **Localization** uses whichever estimator the simulation in
+   `29_mixup_localization.txt` shows to be the more accurate recoverer of a
+   known threshold, chosen on that simulation alone and applied uniformly to
+   every dataset. If the two are within 0.02 of gradient span in RMSE, the
+   registered curve statistic is used.
+3. **The ordering statistic** is R = (z_TITAN - z_struct) / IQR(z over units),
+   with z_TITAN the sum(z-) community change point on the same unit-mean
+   matrix. R > 0 means structure changes at a lower gradient value.
+4. **The confirmatory test** is a two-sided Wilcoxon signed-rank test of R
+   against zero across the INDEPENDENT spatial datasets that detect (D1-D8
+   and the Everglades long-term panel; the Everglades temporal series are
+   not independent of it and are excluded). It runs only if at least four
+   such datasets detect; otherwise the R values are reported descriptively
+   and no test is claimed.
+5. Every dataset's R is reported whether it detects or not.
+
+No dataset will be re-analyzed with different settings, and this test is run
+exactly once.
