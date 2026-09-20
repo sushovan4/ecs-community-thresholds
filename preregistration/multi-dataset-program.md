@@ -231,3 +231,39 @@ within-region test is `Basin` (9 basins).
 Marsh elevation is the proximate control on flooding duration and hence on
 zonation, so it is the ecologically appropriate axis; it is also, unlike
 salinity, measured at the vegetation stations themselves.
+
+---
+
+## Amendment 5 — 2026-09-19, a second-generation estimator and a second pass
+
+The estimator registered in the paper's Section 2.4 compares two groups of
+window curves, so its effective sample size is the number of windows (about
+ten). An alternative built on the Intersection Euler Characteristic Profile
+takes the TAXA as the sample: at a candidate split, each taxon is the point
+given by its correlation profile on each side, the pooled points are
+projected to four dimensions by PCA (label-blind), and the statistic is the
+normalized integral of the intersection profile of the two clouds, small
+values meaning the two structures have separated. The null permutes units
+along the gradient and rebuilds everything, as in every test here.
+
+In simulation (`26_mixup_split.txt`, `27_mixup_stress.txt`, fixed before
+this amendment and before any re-analysis) it dominates the registered
+statistic: power 0.88 against 0.57 at 160 units, 0.60 against 0.25 at 80;
+0.90 against 0.37 at 80% occupancy and 0.47 against 0.13 at 40%; and
+false positives 0.07 against 0.15 under regional confounding. Both fail
+below about 15% occupancy.
+
+**Registered now, before it is applied to any dataset.** The second-generation
+estimator is applied to every dataset and series already analyzed here:
+D1-D8, the Everglades long-term panel, and the thirteen temporal series
+(annual and occasion-level). Settings: candidate splits at unit quantiles
+0.3, 0.4, 0.5, 0.6, 0.7; d0 = 4; 199 unit permutations; within-region
+permutation additionally where a region field is registered. Reported for
+each: the located split on the gradient, p, and the matrix sparsity. Every
+dataset is reported whether or not it detects, and the first-generation
+results stand unchanged beside them. This is a second pass with a better
+instrument, not a replacement of the record.
+
+Expectation, recorded in advance: the analyzed matrices have 70%-96% zeros
+(4%-30% occupancy), which the simulations place at or below the regime where
+the new estimator reaches power 0.47, so most are expected to remain null.
