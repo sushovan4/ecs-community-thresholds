@@ -1,4 +1,4 @@
-"""Export real curves from the completed probes as JSON, as the source data for Figure 1.
+"""Export real curves from the completed probes as JSON, for the briefing page.
 Nothing here is synthesised for presentation: every number is a run output
 (the switchgrass d_by_tod values are transcribed from the 04 run log)."""
 import os, json, glob

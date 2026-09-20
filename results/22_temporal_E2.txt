@@ -1,0 +1,3 @@
+E2 (Everglades MWD SRS): 30 survey years 1996-2025, 558 plot-year columns, 20 taxa of 20
+structural: z-hat = 2016.0  stat 1.232  p = 0.705  95% CI [2004.0, 2016.0]  (windows of 8 years)
+[4s]

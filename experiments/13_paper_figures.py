@@ -78,10 +78,10 @@ save(fig, "fig1_confound")
 P = [24, 40, 80, 160]
 power = [0.00, 0.08, 0.18, 0.66]
 fpr = [0.08, 0.02, 0.02, 0.06]
-# (b) results/11_design_extras.txt: 99 perms, 15 realizations per cell
+# (b) results/16_multiyear_full.txt: 99 perms, 50 realizations per cell
 T = [1, 3, 5, 10]
-stacked = [0.33, 0.47, 0.73, 0.53]
-averaged = [0.33, 0.33, 0.27, 0.27]
+stacked = [0.26, 0.32, 0.44, 0.36]
+averaged = [0.28, 0.44, 0.18, 0.10]
 
 fig, (a, b) = plt.subplots(1, 2, figsize=(6.6, 2.5), sharey=True)
 a.plot(P, power, "-o", color=COPPER, lw=1.8, ms=6)
@@ -108,7 +108,7 @@ b.annotate("years averaged", (T[2], averaged[2]), xytext=(0, -13),
            textcoords="offset points", color=INK, fontsize=8)
 b.set_xticks(T)
 b.set_xlabel("annual surveys $T$  (at $P=80$ plots)")
-b.set_title("(b)  … or with repeat surveys, used correctly", loc="left")
+b.set_title("(b)  … only modestly with repeat surveys", loc="left")
 save(fig, "fig2_design")
 
 # ---- fig 3: the Everglades application -------------------------------------
@@ -144,4 +144,26 @@ ax.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
 ax.set_xlabel(r"window position: mean total phosphorus (μg/L, log scale)")
 ax.set_ylabel(r"standardized $\chi(m)$ per window")
 save(fig, "fig3_glades")
+
+# ---- fig 4: the operating range (results/18_limits.txt) ------------------
+fig, ax = plt.subplots(1, 4, figsize=(7.2, 2.1))
+a, b, c, d = ax
+a.plot([0.3, 0.5, 0.7, 0.9], [0.17, 0.23, 0.57, 0.80], "-o", color=COPPER, lw=1.8, ms=5)
+a.set_xlabel("effect size $a$"); a.set_ylabel(r"power at $\alpha=.05$")
+a.set_title("(a)  reorganization", loc="left", fontsize=8.5)
+b.plot([12, 24, 60, 120], [0.13, 0.47, 0.67, 0.53], "-o", color=COPPER, lw=1.8, ms=5)
+b.set_xlabel("taxa $S$"); b.set_title("(b)  richness", loc="left", fontsize=8.5)
+lab = ["Gaussian", "80%", "40%", "15%", "pres/abs"]
+vals = [0.60, 0.37, 0.13, 0.07, 0.13]
+c.bar(range(5), vals, color=[PATINA] + [COPPER] * 3 + [GRAY], width=.68)
+c.set_xticks(range(5)); c.set_xticklabels(lab, rotation=45, ha="right", fontsize=7)
+c.set_title("(c)  data type", loc="left", fontsize=8.5)
+d.bar([0, 1], [0.15, 0.07], color=[COPPER, PATINA], width=.6)
+d.axhline(0.05, color=GRAY, lw=0.9, ls="--")
+d.set_xticks([0, 1]); d.set_xticklabels(["plot-level", "within-region"], rotation=45, ha="right", fontsize=7)
+d.set_ylabel("false-positive rate"); d.set_ylim(0, 0.2)
+d.set_title("(d)  permutation", loc="left", fontsize=8.5)
+for p_ in (a, b, c):
+    p_.set_ylim(0, 0.9)
+save(fig, "fig4_operating_range")
 print("all figures written to paper/figs/")

@@ -1,0 +1,27 @@
+stress map: base P=160, S=60, a=0.7, z*=0.55, Gaussian; 30 realizations/cell (60 spatial), 99 perms, alpha 0.05
+(Monte Carlo SE of a rejection rate r is sqrt(r(1-r)/30) <= 0.09)
+
+  axis       level  power  RMSE(z-hat)
+     a         0.3   0.17        0.203
+     a         0.5   0.23        0.122
+     a         0.7   0.57        0.100
+     a         0.9   0.80        0.097
+     S          12   0.13        0.179
+     S          24   0.47        0.118
+     S          60   0.67        0.088
+     S         120   0.53        0.106
+   obs       gauss   0.60        0.089
+   obs   count:0.8   0.37        0.157
+   obs   count:0.4   0.13        0.173
+   obs  count:0.15   0.07        0.178
+   obs  binary:0.4   0.13        0.180
+ zstar         0.2   0.27        0.161
+ zstar        0.35   0.63        0.090
+ zstar        0.55   0.60        0.090
+ zstar         0.8   0.20        0.243
+
+spatial confounding (60 null realizations, 8 regions x 20 plots):
+  false-positive rate, plot-level permutation:    0.15
+  false-positive rate, within-region permutation: 0.07
+
+[total 1836s]

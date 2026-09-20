@@ -1,0 +1,3 @@
+C2 (Cedar Creek field B): 28 survey years 1982-2021, 1512 plot-year columns, 56 taxa of 56
+structural: z-hat = 2002.7  stat 0.934  p = 0.930  95% CI [1988.0, 2002.7]  (windows of 7 years)
+[122s]

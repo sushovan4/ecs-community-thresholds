@@ -1,0 +1,5 @@
+D1: 1914 units, 2104 columns, 100 taxa kept of 589 passing the 5-unit rule; z = specific conductance (uS/cm), unit range 8.28-1.18e+05
+primary: z-hat = 130.6  stat 3.201  p = 0.015  95% CI [130.6, 676]  (windows of 478 units)
+precision check (1999 perms, same test): p = 0.0100
+within-region permutation (9 regions): p = 0.340
+[8399s]

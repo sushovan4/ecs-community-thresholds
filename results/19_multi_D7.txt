@@ -1,0 +1,4 @@
+D7: 81 units, 1701 columns, 77 taxa kept of 77 passing the 5-unit rule; z = mean snow depth (cm), unit range 1.9-249
+primary: z-hat = 101.3  stat 3.013  p = 0.025  95% CI [79.76, 101.3]  (windows of 20 units)
+precision check (1999 perms, same test): p = 0.0555
+[2367s]

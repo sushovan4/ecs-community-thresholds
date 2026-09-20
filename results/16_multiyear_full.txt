@@ -1,0 +1,14 @@
+repeat-survey power at P=80, tau=0.3, 99 perms, 50 realizations per cell, alpha=0.05
+(Monte Carlo SE of a rate p is sqrt(p(1-p)/50) <= 0.071)
+
+     mode   T   power    FPR
+ averaged   1    0.28   0.04
+ averaged   3    0.44   0.10
+ averaged   5    0.18   0.02
+ averaged  10    0.10   0.00
+  stacked   1    0.26   0.06
+  stacked   3    0.32   0.10
+  stacked   5    0.44   0.02
+  stacked  10    0.36   0.06
+
+[total 1713s]

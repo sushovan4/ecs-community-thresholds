@@ -1,0 +1,8 @@
+Everglades long-term insect panel (CERP), pre-registered primary test
+22 taxa x 2470 PSU-year columns, 148 PSUs; z = PSU mean days since last dry (31-8063 d)
+windows of 37 PSUs; 199 permutations, 199 bootstraps
+z-hat = 1107.5 d   stat 2.63   p = 0.045   95% CI [174.6, 1107.5]   [28s]
+anchored split at boundary 1107.5 d (TITAN sum(z-) cp 2561.0 d): D = 2.63   p = 0.005 (199 perms)
+POST-HOC PRECISION CHECK (same test, more permutations; the pre-registered verdict is the 199-permutation p above): 1999 permutations, seed 7: p = 0.0250   (Monte Carlo SE 0.0035)   [78s]
+POST-HOC ROBUSTNESS (not pre-registered): permutation of PSU z-values WITHIN regions (10 regions), 999 permutations: observed stat 2.63, p = 0.040   [37s]
+ROBUSTNESS PANEL (pre-registered, rule 1): MWD, 24 sites x 648 site-year columns, 25 taxa, windows of 6 sites: z-hat = 1102.9 d, stat 1.53, p = 0.610, 95% CI [373.7, 1550.4]   [21s]

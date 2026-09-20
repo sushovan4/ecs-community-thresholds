@@ -1,0 +1,5 @@
+T4 (Everglades MWD WCA, by occasion): 147 survey occasions 1996-2025, 4089 plot-year columns, 22 taxa of 22
+structural: z-hat = 2008.0  stat 2.154  p = 0.075  95% CI [2003.2, 2017.6]  (windows of 37 years)
+[10s]
+
+T4 precision check (1999 perms, same test): p = 0.0770

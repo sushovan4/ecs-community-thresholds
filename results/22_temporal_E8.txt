@@ -1,0 +1,3 @@
+E8 (Everglades CERP WCA): 20 survey years 2005-2024, 965 plot-year columns, 17 taxa of 17
+structural: z-hat = 2018.5  stat 1.643  p = 0.325  95% CI [2010.5, 2018.5]  (windows of 6 years)
+[3s]

@@ -1,0 +1,4 @@
+D2: 501 units, 563 columns, 100 taxa kept of 378 passing the 5-unit rule; z = specific conductance (uS/cm), unit range 10.1-2.58e+03
+primary: z-hat = 304.3  stat 2.150  p = 0.235  95% CI [76.94, 304.3]  (windows of 125 units)
+within-region permutation (26 regions): p = 0.275
+[744s]

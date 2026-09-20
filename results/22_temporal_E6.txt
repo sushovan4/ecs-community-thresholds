@@ -1,0 +1,3 @@
+E6 (Everglades CERP SRS): 20 survey years 2005-2024, 621 plot-year columns, 15 taxa of 15
+structural: z-hat = 2012.5  stat 1.008  p = 0.860  95% CI [2010.5, 2018.5]  (windows of 6 years)
+[3s]

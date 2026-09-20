@@ -1,0 +1,4 @@
+D5: 1085 units, 1179 columns, 100 taxa kept of 334 passing the 5-unit rule; z = total phosphorus, unit range 0.237-1.12e+04
+primary: z-hat = 25.78  stat 1.393  p = 0.650  95% CI [15.43, 103.3]  (windows of 271 units)
+within-region permutation (9 regions): p = 0.945
+[3987s]

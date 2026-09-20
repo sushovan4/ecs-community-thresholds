@@ -1,0 +1,18 @@
+  id                     series  years   cols  taxa  note
+  E1         Everglades MWD PHD     18    193    14  excluded: <15 taxa
+  E5        Everglades CERP PHD      0      0     0  no rows
+  E2         Everglades MWD SRS     30    558    20  
+  E6        Everglades CERP SRS     20    621    15  
+  E3         Everglades MWD TSL     30    390    21  
+  E7        Everglades CERP TSL     20    128     8  excluded: <15 taxa
+  E4         Everglades MWD WCA     30    932    22  
+  E8        Everglades CERP WCA     20    965    17  
+  C1        Cedar Creek field A     27   1457    52  
+  C2        Cedar Creek field B     28   1512    56  
+  C3        Cedar Creek field C     35   1890    68  
+  C4        Cedar Creek field D     26   1170    84  
+  N1          Niwot Saddle grid     22   1701    98  
+  T1 Everglades MWD PHD, by occasion     75    668    14  excluded: <15 taxa
+  T2 Everglades MWD SRS, by occasion    146   2476    20  
+  T3 Everglades MWD TSL, by occasion    143   1711    22  
+  T4 Everglades MWD WCA, by occasion    147   4089    22  

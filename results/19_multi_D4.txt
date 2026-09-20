@@ -1,0 +1,4 @@
+D4: 689 units, 749 columns, 100 taxa kept of 822 passing the 5-unit rule; z = sediment copper (ug/dry g), unit range 0.0375-722
+primary: z-hat = 2.476  stat 1.788  p = 0.420  95% CI [2.476, 9.704]  (windows of 172 units)
+within-region permutation (4 regions): p = 0.605
+[1025s]

@@ -1,0 +1,29 @@
+Curvature attribution of the Everglades long-term detection
+Gauss-Bonnet check: sum of per-taxon curvature equals chi in all 120 window-grid cells (exact)
+split at z-hat = 1107.5 d since last dry (windows 8 | 2)
+per-taxon change in curvature (right minus left, grid-averaged); sum over taxa = change in chi = +41.83
+share = taxon change / chi change; PSU permutation p (199), BH q
+
+             taxon    change   share      p      q  TITAN
+            COENAG     +5.12   +0.12  0.015  0.183  
+         ERYTHEMIS     +4.74   +0.11  0.035  0.183  
+         LIBELLULA     +4.64   +0.11  0.025  0.183  
+         PELOCORIS     +4.46   +0.11  0.035  0.183  
+            CORING     +3.71   +0.09  0.045  0.183  
+ Other.Heteroptera     +3.30   +0.08  0.225  0.431  
+        COLEOPTERA     +3.26   +0.08  0.110  0.269  z- indicator, cp 1434 d
+        CELITHEMIS     +2.84   +0.07  0.050  0.183  z+ indicator, cp 263 d
+    BELOSTOMATINAE     +2.37   +0.06  0.100  0.269  z- indicator, cp 1434 d
+            CORIXI     +2.36   +0.06  0.395  0.621  
+            ANAJUN     +2.16   +0.05  0.180  0.396  
+            TRAMEA     +1.89   +0.05  0.335  0.567  
+            PACLON     +1.83   +0.04  0.460  0.675  z+ indicator, cp 387 d
+            TRICHO     -0.93   -0.02  0.080  0.251  
+          EPITHECA     -0.80   -0.02  0.235  0.431  z+ indicator, cp 2561 d
+          GERRIDAE     +0.79   +0.02  0.630  0.770  
+       BRACHYMESIA     +0.47   +0.01  0.600  0.770  z+ indicator, cp 280 d
+       LEPIDOPTERA     -0.41   -0.01  0.515  0.708  z+ indicator, cp 330 d
+           PANTALA     -0.11   -0.00  0.760  0.880  
+            ARIPAL     +0.10   +0.00  0.865  0.930  
+           DIPTERA     +0.09   +0.00  0.905  0.930  
+            PERTEN     -0.04   -0.00  0.930  0.930  z+ indicator, cp 605 d

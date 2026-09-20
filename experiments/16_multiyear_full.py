@@ -5,20 +5,23 @@ Same community model and permutation schemes as 11_design_extras.py:
   averaged  years averaged within plots, P = 80 columns
   stacked   plot-years as columns, windows of W plots carry W*T columns,
             the permutation moves whole plots (years stay together)
-50 realizations per cell, 199 permutations, T in {1, 3, 5, 10},
+50 realizations per cell, 99 permutations, T in {1, 3, 5, 10},
 parallel over cells.  Output: results/16_multiyear_full.txt
 """
 import importlib
 import os
+
+for _v in ("OMP_NUM_THREADS", "VECLIB_MAXIMUM_THREADS", "OPENBLAS_NUM_THREADS"):
+    os.environ.setdefault(_v, "1")
 import time
-from multiprocessing import Pool
+import multiprocessing as mp
 
 import numpy as np
 
 sim = importlib.import_module("06_gradient_estimator")
 ext = importlib.import_module("11_design_extras")
 
-P, NREAL, NPERM = 80, 50, 199
+P, NREAL, NPERM = 80, 50, 99
 TS = (1, 3, 5, 10)
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                    "results", "16_multiyear_full.txt")
@@ -53,7 +56,7 @@ if __name__ == "__main__":
     t0 = time.time()
     jobs = [(m, T, s, i) for m in ("averaged", "stacked") for T in TS
             for s in ("THRESH", "NULL") for i in range(NREAL)]
-    with Pool(os.cpu_count()) as pool:
+    with mp.get_context("spawn").Pool(int(os.environ.get("NPROC", 4))) as pool:
         res = pool.map(cell, jobs, chunksize=1)
     with open(OUT, "w") as f:
         f.write(f"repeat-survey power at P={P}, tau={ext.TAU}, {NPERM} perms, "

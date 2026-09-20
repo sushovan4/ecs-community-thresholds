@@ -1,0 +1,3 @@
+C1 (Cedar Creek field A): 27 survey years 1982-2019, 1457 plot-year columns, 52 taxa of 52
+structural: z-hat = 1988.0  stat 1.305  p = 0.660  95% CI [1988.0, 1998.0]  (windows of 7 years)
+[104s]

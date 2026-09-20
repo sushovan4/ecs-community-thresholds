@@ -21,3 +21,18 @@ bootstrap resamples, realizations) are in each file's header.
 
 Files without the `_pegasus` suffix in the 06/08 series are earlier,
 lower-strength runs kept for provenance.
+
+## Added 2026-09-19
+
+| File | What it holds |
+|---|---|
+| `17_everglades_lt_primary.txt` | Everglades long-term panel: primary, anchored, within-region, robustness panel |
+| `18_limits.txt` | the operating range: effect size, taxa, data type, threshold position, spatial confounding |
+| `19_multi_D*.txt` | the frozen estimator on each public gradient (D1-D8) |
+| `20_persistence_swap.txt` | persistence landscapes and total persistence against chi |
+| `21_curvature_attribution.txt` | per-taxon curvature shares of the Everglades detection |
+| `22_temporal_*.txt` | time as the gradient: ten annual series, three occasion-level series |
+| `23_statistic_upgrade.txt` | pooling statistics compared (mean, Mahalanobis, CUSUM) |
+| `24_window_scaling.txt` | window width against survey size |
+| `25_titan_*.txt` | TITAN change points for the same datasets |
+| `26_mixup_split.txt` | intersection-ECP split test against the registered statistic |

@@ -1,0 +1,3 @@
+T3 (Everglades MWD TSL, by occasion): 143 survey occasions 1996-2025, 1711 plot-year columns, 22 taxa of 22
+structural: z-hat = 2013.1  stat 1.497  p = 0.420  95% CI [2003.4, 2015.6]  (windows of 36 years)
+[8s]

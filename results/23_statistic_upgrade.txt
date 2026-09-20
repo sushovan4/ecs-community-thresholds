@@ -1,0 +1,24 @@
+pooling statistics compared, 40 realizations, 99 perms, alpha 0.05 (MC SE of a rate <= 0.08)
+
+    P statistic   power    FPR    RMSE
+   24      mean    0.03   0.10   0.205
+   24      maha    0.00   0.03   0.205
+   24    maha_d    0.00   0.03   0.205
+   24     cusum    0.03   0.07   0.194
+
+   40      mean    0.03   0.07   0.170
+   40      maha    0.03   0.07   0.154
+   40    maha_d    0.03   0.07   0.154
+   40     cusum    0.07   0.07   0.146
+
+   80      mean    0.25   0.07   0.146
+   80      maha    0.23   0.03   0.139
+   80    maha_d    0.23   0.03   0.139
+   80     cusum    0.33   0.00   0.131
+
+  160      mean    0.57   0.05   0.103
+  160      maha    0.57   0.05   0.091
+  160    maha_d    0.57   0.05   0.091
+  160     cusum    0.68   0.07   0.089
+
+[total 621s]

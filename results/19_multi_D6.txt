@@ -1,0 +1,4 @@
+D6: 207 units, 6029 columns, 100 taxa kept of 139 passing the 5-unit rule; z = N addition (g N m-2 yr-1), unit range 0-27.2
+primary: z-hat = 7.827  stat 1.881  p = 0.175  95% CI [3.514, 11.75]  (windows of 52 units)
+within-region permutation (4 regions): p = 0.205
+[1954s]
