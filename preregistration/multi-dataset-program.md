@@ -201,3 +201,33 @@ variable will be tried, and the dataset is analyzed once.
 being quantitative, the cover matrix may be zero-heavy; per the operating
 range that would lower power. The analysis is run coastwide, not restricted
 to a basin, and the outcome is reported either way.
+
+---
+
+## Amendment 4 — 2026-09-19, D8 gradient, before the estimator ran
+
+The fallback declared in amendment 3 is triggered, and this records it from
+structural checks alone (identifier overlap and column names; no gradient
+association or test statistic computed).
+
+Soil porewater salinity in `CRMS_Soil_Properties.csv` is measured at SOIL
+stations (identifiers ending `-S##`) and vegetation at VEGETATION stations
+(`-V##`): 3,171 soil stations and 4,619 vegetation stations with **zero**
+identifier overlap, though 392 sites are shared. Salinity is therefore not a
+per-unit measurement for the vegetation stations, and rule 2 is not
+satisfiable with it.
+
+Per the pre-declared fallback, z is **station elevation, feet NAVD88
+(Geoid 12A)**, from `CRMS_2014_Vegetation_Station_Elevation_Data.csv` (USGS
+ScienceBase item 606dde87d34eae125e9c75a8), which joins to 3,180 vegetation
+stations. Resolutions of detail, fixed here: all stations carrying an
+elevation are used (the file's `Exclude_from_Site_Mean` flag governs
+site-mean aggregation, not station validity, and we do not aggregate to
+sites); the unit is the vegetation station; columns are station-years, with
+cover summed per species within a station-year; the species field is
+`Scientific Name As Currently Recognized`; the region field for the
+within-region test is `Basin` (9 basins).
+
+Marsh elevation is the proximate control on flooding duration and hence on
+zonation, so it is the ecologically appropriate axis; it is also, unlike
+salinity, measured at the vegetation stations themselves.
