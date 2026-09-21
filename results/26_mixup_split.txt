@@ -2,9 +2,9 @@ Intersection-ECP split test vs the registered statistic; 40 realizations, 199 un
 (registered figures from results/23_statistic_upgrade.txt)
 
     P  mixup power  mixup FPR  registered power  registered FPR
-   24         0.12       0.10              0.03            0.10
-   40         0.28       0.05              0.03            0.07
-   80         0.60       0.07              0.25            0.07
-  160         0.88       0.05              0.57            0.05
+   24         0.05       0.17              0.03            0.10
+   40         0.03       0.03              0.03            0.07
+   80         0.42       0.10              0.25            0.07
+  160         0.72       0.03              0.57            0.05
 
-[total 1476s]
+[total 5130s]

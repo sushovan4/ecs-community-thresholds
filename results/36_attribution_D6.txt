@@ -1,0 +1,3 @@
+D6: 207 units, 100 taxa; split at z = 7.827 (N addition (g N m-2 yr-1))
+change in chi across the split: -9675 (sum of per-taxon curvature changes, exact)
+[21s]

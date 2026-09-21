@@ -1,0 +1,4 @@
+D7: 81 units, 1701 columns, 77 taxa, sparsity 0.83
+mixup split: z-hat = 125.3  T = 2.4153  p = 0.005 (199 unit permutations)  95% CI [5.451, 158.6]
+split grid: 15 quantiles from 0.15 to 0.85
+[1211s]

@@ -1,0 +1,3 @@
+D4: 689 units, 100 taxa; split at z = 2.476 (sediment copper (ug/dry g))
+change in chi across the split: +1.362e+04 (sum of per-taxon curvature changes, exact)
+[21s]

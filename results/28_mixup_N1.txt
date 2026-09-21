@@ -1,0 +1,4 @@
+N1: 22 units, 1701 columns, 98 taxa, sparsity 0.87
+mixup split: z-hat = 2008  T = 8.6695  p = 0.005 (199 unit permutations)  95% CI [1993, 2022]
+split grid: 15 quantiles from 0.15 to 0.85
+[1225s]

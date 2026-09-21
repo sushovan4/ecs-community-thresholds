@@ -16,7 +16,7 @@ Construction, for a candidate split of the gradient-ordered units:
   ->  Dchi(r) = chi(U(A;r) cap U(B;r)) and T = int|Dchi| dr / r_max.
 Structure that reorganizes across the split SEPARATES the clouds, so small T
 is evidence, and the null permutes the units along the gradient and rebuilds
-everything, as elsewhere in this paper.  (A per-taxon sign-flip null was
+everything, as elsewhere in this paper.  (A per-taxon cloud-swap null was
 tried first and is INVALID: the observed clouds are internally coherent,
 all-left against all-right, while a flipped cloud is a mixture, so the
 observed statistic is smaller than its flipped replicates whether or not
@@ -74,7 +74,10 @@ def stat_at(A, B):
     return profile_stat(intersection_profile([a, b], g), g, "intnorm")
 
 
-FRACS = (0.3, 0.4, 0.5, 0.6, 0.7)
+FRACS = tuple(np.round(np.arange(0.15, 0.851, 0.05), 2))
+if os.environ.get("MIXUP_FRACS"):           # sensitivity check; see the
+    FRACS = tuple(float(x) for x in         # deviation record in
+                  os.environ["MIXUP_FRACS"].split(","))   # docs/multi-dataset-preregistration.md
 
 
 def scan(X, z):

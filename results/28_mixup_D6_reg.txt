@@ -1,0 +1,5 @@
+D6: 207 units, 6029 columns, 100 taxa, sparsity 0.92
+mixup split: z-hat = 5.44  T = 10.3814  p = 0.005 (199 unit permutations)  95% CI [1.02, 9.52]
+split grid: 5 quantiles from 0.3 to 0.7
+within-region (4 regions): p = 0.005
+[496s]

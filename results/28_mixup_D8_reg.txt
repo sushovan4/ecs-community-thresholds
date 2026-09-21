@@ -1,0 +1,5 @@
+D8: 3180 units, 58672 columns, 100 taxa, sparsity 0.96
+mixup split: z-hat = 0.665  T = 12.5254  p = 0.005 (199 unit permutations)  95% CI [0.3374, 0.7926]
+split grid: 5 quantiles from 0.3 to 0.7
+within-region (9 regions): p = 0.005
+[681s]

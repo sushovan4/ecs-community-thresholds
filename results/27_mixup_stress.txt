@@ -1,14 +1,14 @@
 Intersection-ECP split test under the conditions that broke the registered statistic (P=160, 40 realizations, 99 perms)
 
    data type  mixup power  registered
-       gauss         0.95        0.60
-   count:0.8         0.90        0.37
-   count:0.4         0.47        0.13
-  count:0.15         0.10        0.07
-  binary:0.4         0.17        0.13
+       gauss         0.72        0.60
+   count:0.8         0.68        0.37
+   count:0.4         0.10        0.13
+  count:0.15         0.03        0.07
+  binary:0.4         0.10        0.13
 
 spatial confounding (60 null realizations, 8 regions):
-  false positives, plot-level permutation:    0.07   (registered 0.15)
-  false positives, within-region permutation: 0.05   (registered 0.07)
+  false positives, plot-level permutation:    0.12   (registered 0.15)
+  false positives, within-region permutation: 0.03   (registered 0.07)
 
-[total 796s]
+[total 2846s]

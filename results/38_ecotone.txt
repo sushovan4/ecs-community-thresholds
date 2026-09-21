@@ -1,0 +1,12 @@
+Coastal marsh-forest ecotone (Payne et al. 2026), amendment 9
+125 sampling points at 3 sites, 20 taxa of 20 passing the 5-point rule; salinity 0.09-42.58 PSU; sparsity 0.87
+published TITAN change points: 0.8 and 7.6 PSU
+
+PRIMARY -- log(1+cover), the pipeline used on every other dataset:
+  interaction, widened grid: z-hat = 0.3 PSU  T = 2.3729  p = 0.005  within-site p = 0.005  95% CI [0.26, 28.6]  (15 quantiles)  [outside TITAN's 0.8-7.6 PSU]  [454s]
+  interaction, registered grid: z-hat = 0.37 PSU  T = 2.6271  p = 0.005  within-site p = 0.005  95% CI [0.33, 22.5]  (5 quantiles)  [outside TITAN's 0.8-7.6 PSU]  [136s]
+  curve statistic (localizer): z-hat = 14.2 PSU  p = 0.020  95% CI [9.15, 19.3]  (windows of 31)
+
+SECONDARY -- centred log ratio, registered in amendment 9 because percent cover is closed:
+  interaction, widened grid: z-hat = 1.2 PSU  T = 1.2458  p = 0.005  within-site p = 0.005  95% CI [0.26, 22.9]  (15 quantiles)  [inside TITAN's 0.8-7.6 PSU]  [326s]
+  curve statistic (localizer): z-hat = 14.2 PSU  p = 0.120  95% CI [9.15, 19.3]  (windows of 31)

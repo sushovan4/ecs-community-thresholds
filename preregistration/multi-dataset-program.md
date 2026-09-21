@@ -306,3 +306,254 @@ until its localization is characterized.
 
 No dataset will be re-analyzed with different settings, and this test is run
 exactly once.
+
+---
+
+## Deviation recorded — 2026-09-20: the ordering test was run early
+
+Amendment 6 states that the ordering test runs exactly once. It was in fact
+run once with incomplete inputs, and the output is kept as
+`results/31_ordering_incomplete.txt`. At that point the second-pass
+detection files for the Everglades long-term panel and for D6-D8 were
+missing (they had been deleted when the split grid was widened and not yet
+regenerated), and TITAN's change point for D1 was still computing, so those
+five rows were treated as non-detecting or incomplete. The four datasets
+with complete inputs gave a median R of 0.039, two of four positive, and a
+Wilcoxon p of 1.00.
+
+The complete run follows once the missing inputs exist, and both are
+reported. No specification was changed between the two runs: the estimator,
+the detection rule, the localization choice, the statistic and the test are
+exactly those registered in amendment 6. The early look is disclosed rather
+than discarded because discarding it would leave the record incomplete.
+
+---
+
+## Deviation recorded — 2026-09-20: the split grid was widened
+
+Amendment 5 registered candidate splits at unit quantiles 0.3, 0.4, 0.5, 0.6,
+0.7. The runs reported use fifteen quantiles from 0.15 to 0.85 in steps of
+0.05. The reason: on the Everglades long-term panel the located split sat at
+the edge of the narrow grid, so the grid, not the data, was choosing the
+answer, and a located split pinned at a boundary is not a location estimate.
+The grid was widened before the second-pass detection results for D2, D3, D4,
+D6, D7 and D8 existed, and the D1, D5 and Everglades runs made on the narrow
+grid were rerun; those narrow-grid outputs were not retained, which is a gap
+in the record.
+
+The change does not affect the validity of the test. Every permutation
+replicate minimizes over the same grid as the observed statistic, so the
+null distribution is the distribution of the same function of the data and
+the p-value stays exact whatever the grid contains. What the grid changes is
+the located split and, through the minimum, the power.
+
+Because the registered setting was departed from, the whole second pass is
+also run on the registered 0.30-0.70 grid and both are reported for every
+dataset (`results/28_mixup_<name>_reg.txt` against
+`results/28_mixup_<name>.txt`). The widened grid is the one used for the
+ordering test of amendment 6, as it was when that amendment was written.
+
+---
+
+## Amendment 7 — 2026-09-20, the interaction test on the TITAN benchmark
+
+Written and committed before the run. Amendment 5 listed the datasets the
+second pass would cover: D1-D8, the Everglades long-term panel and the
+thirteen temporal series. It did not include the `glades` dataset shipped
+with TITAN2 (126 marsh sites, 164 macroinvertebrate taxa, total-phosphorus
+gradient), which the paper analyzes separately as the incumbent's own
+benchmark. The registered curve statistic did not reject there (p = 0.30),
+and that non-detection is reported in the paper.
+
+**Registered now.** The interaction test of amendment 5 is applied to that
+matrix once, with the settings used for every other dataset: the same
+preprocessing already fixed for it (taxa in at least five sites,
+log(1+abundance), sites ordered by TP), the taxon cap of 100 that every
+other dataset carries, both split grids (the widened 0.15-0.85 and the
+registered 0.30-0.70), 199 unit permutations. There is no region field, so
+no restricted permutation. Output: `results/33_glades_mixup.txt`.
+
+**Expectation, recorded in advance.** 126 sites of sparse counts sits below
+the P = 160 row of the simulation, where the interaction test reaches power
+0.47 at 40% occupancy. A detection is roughly a coin flip and a null would
+be uninformative about the biology.
+
+**Commitments.** The result is reported whichever way it falls, beside the
+curve statistic's p = 0.30 on the same matrix. It is an extra look at a
+dataset already analyzed, taken after the interaction test was seen to
+detect widely elsewhere, and it is labeled as such in the paper. It does
+not enter the amendment-6 ordering test, whose dataset list was fixed
+before this amendment.
+
+---
+
+## Amendment 8 — 2026-09-20, do the two channels run on different taxa?
+
+Registered before the statistic has been computed for any dataset other than
+the Everglades long-term panel, and before the second-pass and TITAN inputs
+for the remaining datasets exist.
+
+**Disclosure, first.** This test generalizes a result already seen. On the
+Everglades panel the five taxa carrying 54% of the structural change were
+none of TITAN's eight pure and reliable indicator taxa, and those indicators
+contributed at most 1% each. That observation motivates this amendment, so
+this is a registered generalization of a result seen once, not a blind
+prediction, and the paper will say so in those words. The Everglades panel
+is reported alongside but excluded from the confirmatory test.
+
+**The question.** When both instruments fire on the same matrix, do they
+implicate the same species? The ordering test of amendment 6 asks whether
+the two channels change at the same PLACE. This asks whether they are
+carried by the same TAXA.
+
+**The statistic.** For each dataset where the interaction test detects
+(amendment 5 rule, including the within-region test where a region field
+exists), take the curvature attribution of Section 2.5 of the paper at the
+split located by the curve statistic, giving each taxon i a contribution
+|dkappa_i| to the change in chi. Let I be TITAN's pure and reliable
+indicator taxa on the same unit-mean matrix. Define
+
+    C = ( sum_{i in I} |dkappa_i| / sum_i |dkappa_i| ) / ( |I| / S ).
+
+C = 1 means the indicator taxa carry exactly their proportional share of the
+structural change; C < 1 means the structural change is carried
+disproportionately by taxa TITAN does not flag. Reported per dataset with a
+permutation p-value from drawing subsets of size |I| uniformly at random
+from the S taxa (9999 draws), which is exact.
+
+**The confirmatory test** is a two-sided Wilcoxon signed-rank test of
+log C against zero across the independent detecting datasets D1-D8,
+excluding the Everglades panel for the reason given above. It runs only if
+at least four such datasets detect and have both a curvature attribution and
+a TITAN indicator set; otherwise the C values are reported descriptively and
+no test is claimed. A secondary, coarser reading is also reported: the
+overlap between the five largest contributors and I, against the
+hypergeometric null.
+
+**TITAN's stochasticity.** The existing `25_titan_<D>.txt` runs recorded only
+the NUMBER of indicators, not their names, and were run without a fixed
+seed. A seeded rerun with identical settings (minSplt 5, 250 permutations,
+250 bootstraps, purity and reliability 0.95) writes the full sppmax table
+and is the input to this test. The change points from that seeded rerun are
+also reported beside the originals as a reproducibility check, and the
+amendment-6 ordering test continues to use the originally registered
+outputs.
+
+**Commitments.** Every detecting dataset is reported whether its C is below
+1 or not, the test runs once, and a null result is reported as a null.
+Failure here means the Everglades disjointness was idiosyncratic, which is
+worth knowing and will be stated as such.
+
+---
+
+## Amendment 9 — 2026-09-20, a tenth dataset with a published incumbent answer
+
+Written and committed **before the data were downloaded**; every choice below
+is fixed from the Dryad landing page and the published abstract alone.
+
+**The dataset.** Payne et al., *Plant thresholds and community composition of
+coastal marsh-forest ecotones in the US Northeast*, Ecosphere (2026);
+data at doi:10.5061/dryad.5tb2rbpcm, published 2025-12-15, file
+`Ecotone_PlantSpp-EnvData.csv`. Three sites experiencing marsh upslope
+migration (Waquoit Bay MA, Pine Neck NY, Egg Harbor NJ), understory percent
+cover by species, with soil salinity, moisture, bulk density, organic
+matter, redox, light, water depth, elevation and flooding duration per
+sampling point.
+
+**Why this one, stated plainly.** It is the only dataset in this programme
+whose incumbent answer is already in print: the authors report TITAN
+community change points at **0.8 and 7.6 PSU** soil salinity. Every other
+TITAN comparison here was regenerated by us. This one was produced
+independently, by the method's own users, before we saw the data.
+
+**Registered choices.**
+1. *Gradient* z = soil salinity (PSU, from 5:1 water:soil extracts). Chosen
+   because it is the axis the published change points are on. No other
+   environmental variable is used as a gradient.
+2. *Unit* = sampling point. *Taxa* = understory cover species; saplings and
+   mature trees are excluded, as those are separate response variables in
+   the source paper, not the understory community.
+3. The standing inclusion rule applies unchanged: at least 40 units and at
+   least 15 taxa after the 5-unit occurrence rule, else the dataset is
+   excluded and reported as excluded.
+4. *Region* = site (three sites), so the within-region permutation is the
+   test of record.
+5. *Primary analysis* is the two-stage procedure exactly as applied to every
+   other dataset: interaction test for detection (199 unit permutations,
+   the widened 0.15-0.85 split grid, also reported on the registered
+   0.30-0.70 grid), curve statistic for localization, taxon cap 100,
+   log(1+cover).
+
+**Compositionality, registered as a secondary analysis.** Percent cover is
+closer to closed data than any other substrate here, and correlations among
+closed compositions are the classic spurious-network trap. The primary run
+therefore has a pre-registered companion: the identical pipeline on
+centred-log-ratio-transformed cover (zeros handled by a multiplicative
+replacement at half the smallest positive value), reported beside the
+primary whether or not the two agree. If they disagree, that disagreement
+is the result and will be reported as such.
+
+**What counts as what.** A detection whose located split falls inside
+[0.8, 7.6] PSU would be concordance with an independently published
+threshold. A detection outside it, or a null, is reported as plainly.
+This dataset does not enter the amendment-6 ordering test or the
+amendment-8 attribution test, whose dataset lists were fixed before it.
+
+**Authorship note.** No author of the source dataset is involved in this
+analysis at the time of writing. If that changes, it will be recorded here
+with a date, and the analysis above will not be altered.
+
+### Amendment 9, implementation note — 2026-09-20, fixed from the README
+
+Recorded after downloading the file and reading its README, before any
+statistic was computed. Amendment 9 said "understory cover species"; the
+file needs that made exact.
+
+The README states that fields 6-79 are percent cover in 0.5 m^2 quadrats of
+"understory plant species, plants, wrack, dead material, or bare ground".
+The taxa are therefore columns `Poaceae_sp` through `PHAU` inclusive (70
+columns), and the following are excluded because they are not species:
+`Wrack`, `Dead`, `Bare`, the `Total` sum, the derived cover groupings
+`ST_Gram`, `ST_Shrub`, `ST_Herb`, `Phrag`, `SI Phrag_Stems`, and every
+`_s` (sapling) and `_t` (tree) column, the last per amendment 9 itself.
+Unknown morphospecies (`UnForb1`, `UnShrub2`, ...) are kept: they are
+distinct taxa in the source data and dropping them would change the
+community.
+
+The file has 125 rows and three sites (PN 43, WB 41, EH 41). Salinity runs
+0.09-42.58 PSU. `Site` is the region for the restricted permutation. The
+unit is the row (a sampling point); there is one quadrat per point, so
+units and columns coincide, as they do for the single-survey datasets
+D1-D8.
+
+---
+
+## Correction recorded — 2026-09-20: every interaction-test number is being recomputed
+
+Not a change of specification. A defect in the implementation, found while
+checking why one dataset gave two different answers on two machines.
+
+The intersection profile is computed from Alpha complexes, and the vendored
+code requested GUDHI's `precision="fast"`, which uses inexact geometric
+predicates. The taxon clouds here are near-degenerate -- taxa with identical
+sparse occurrence patterns have identical correlation profiles -- so the
+underlying Delaunay construction sits on ties that it resolves differently
+depending on the linear-algebra backend. On the Cedar Creek matrix at the
+0.15 split, `fast` returned T = 12.3814 where both `safe` and `exact` return
+8.1186, and the located split moved between machines.
+
+`safe` (interval arithmetic with an exact fallback) agrees with `exact` to
+ten decimal places and costs about 0.7 of `exact`, roughly nine times
+`fast`. It is now the default, overridable by `ECP_PRECISION`.
+
+**Every number produced by the interaction test is therefore being
+recomputed**: all of `28_mixup_*`, the TITAN benchmark run of amendment 7,
+the ecotone run of amendment 9, and the simulation studies
+(`26`, `27`, `29`, `30`, `34`, `37`). The superseded outputs are preserved
+under `results/fast_precision_superseded/` rather than deleted, and the
+paper will report any verdict that changes.
+
+No pre-registered specification was altered: the estimator, the split
+grids, the permutation schemes, the seeds and the dataset list are exactly
+as registered. Only the geometric predicate changed, from one that is not
+reproducible to one that is.

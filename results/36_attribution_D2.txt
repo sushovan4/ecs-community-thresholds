@@ -1,0 +1,3 @@
+D2: 501 units, 100 taxa; split at z = 304.3 (specific conductance (uS/cm))
+change in chi across the split: +3196 (sum of per-taxon curvature changes, exact)
+[15s]

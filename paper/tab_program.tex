@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\caption{The two-stage instrument on nine public gradients, all pre-registered. $p$ is the interaction test of Section~\ref{sec:mixup} over 199 unit permutations; $p_{\text{reg}}$ permutes within regions, the test of record where the gradient is spatially structured; $p_{\text{grid}}$ repeats the test on the narrower split grid registered in amendment~5. $\hat z$ and $p_\chi$ are the first-generation curve statistic on the same matrix, reported unchanged. ``zeros'' is the fraction of zero entries, the pre-flight diagnostic of Section~\ref{sec:limits}. A dagger marks a design below the hundred-unit floor of Section~\ref{sec:mixloc}; its $p$-values are reported but not counted as evidence.}
+\label{tab:program}
+\small
+\begin{tabular}{llrrrrrrr}
+\toprule
+Dataset & Gradient & Units & zeros & $p$ & $p_{\text{reg}}$ & $p_{\text{grid}}$ & $\hat z$ & $p_\chi$ \\
+\midrule
+Everglades LT insects & days since dry & 148 & 0.83 & \textbf{0.010} & \textbf{0.030} & \textbf{0.005} & 1108 & 0.045 \\
+EPA rivers \& streams & conductivity & 1914 & 0.79 & \textbf{0.005} & \textbf{0.005} & \textbf{0.005} & 130.6 & 0.015 \\
+EPA streams, Appalachia & conductivity & 501 & 0.74 & \textbf{0.015} & \textbf{0.050} & \textbf{0.005} & 304.3 & 0.235 \\
+EMAP mine-drainage streams & conductivity & 572 & 0.75 & \textbf{0.005} & \textbf{0.005} & \textbf{0.005} & 46.9 & 0.140 \\
+EPA estuaries & sediment copper & 689 & 0.90 & \textbf{0.005} & \textbf{0.005} & \textbf{0.005} & 2.476 & 0.420 \\
+EPA lakes & total phosphorus & 1085 & 0.70 & \textbf{0.005} & \textbf{0.005} & \textbf{0.005} & 25.78 & 0.650 \\
+Cedar Creek (N addition) & N dose & 207 & 0.92 & 0.065 & \textbf{0.045} & \textbf{0.005} & 7.827 & 0.175 \\
+Niwot alpine plants & snow depth & 81 & 0.83 & 0.005$^\dagger$ & --- & 0.005$^\dagger$ & 101.3 & 0.025 \\
+CRMS Louisiana marsh & station elevation & 3180 & 0.96 & \textbf{0.005} & \textbf{0.005} & \textbf{0.005} & 0.742 & 0.920 \\
+\bottomrule
+\end{tabular}
+\end{table}

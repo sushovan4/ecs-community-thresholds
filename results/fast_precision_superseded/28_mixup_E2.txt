@@ -1,0 +1,4 @@
+E2: 30 units, 558 columns, 20 taxa, sparsity 0.56
+mixup split: z-hat = 2000  T = 2.1017  p = 0.005 (199 unit permutations)  95% CI [1998, 2018]
+split grid: 15 quantiles from 0.15 to 0.85
+[79s]

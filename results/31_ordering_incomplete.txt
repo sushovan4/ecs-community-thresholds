@@ -1,0 +1,17 @@
+Cross-dataset ordering test (amendment 6)
+
+ dataset  p(mixup)  p(region)  detect   z_struct    z_TITAN        R
+      D1     0.005      0.005    True      130.6        nan      nan
+      D2     0.015       0.05    True      304.3       33.2   -0.981
+      D3     0.005      0.005    True       46.9       68.9    0.127
+      D4     0.005      0.005    True      2.476      9.268    0.481
+      D5     0.005      0.005    True      25.78      22.06   -0.048
+      D6       nan        nan   False      7.827        3.4   -0.521
+      D7       nan        nan   False      101.3      19.83   -0.780
+      D8       nan        nan   False      0.742        nan      nan
+     ELT       nan        nan   False       1108       2561    1.690
+
+detecting datasets with both change points: 4
+Wilcoxon signed-rank of R against zero: W = 5.0, p = 1.0000
+sign test: 2 of 4 have R > 0 (structure at a lower gradient value)
+median R = 0.039 (in units of the gradient's interquartile range)

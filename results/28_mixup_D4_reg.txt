@@ -1,0 +1,5 @@
+D4: 689 units, 749 columns, 100 taxa, sparsity 0.90
+mixup split: z-hat = 13.37  T = 8.7288  p = 0.005 (199 unit permutations)  95% CI [2.793, 15.08]
+split grid: 5 quantiles from 0.3 to 0.7
+within-region (4 regions): p = 0.025
+[468s]

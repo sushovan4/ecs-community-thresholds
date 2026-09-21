@@ -1,0 +1,4 @@
+TITAN2 glades benchmark: 126 sites, 100 taxa (capped at 100), sparsity 0.65, TP 2.5-169.5 ug/L
+registered curve statistic on this matrix: z-hat = 12.5, p = 0.30
+widened grid: z-hat = 36.15 ug/L  T = 2.5169  p = 0.005  95% CI [14.55, 79.04]  (15 quantiles 0.15-0.85)  [1031s]
+registered grid: z-hat = 36.15 ug/L  T = 2.5169  p = 0.005  95% CI [15.59, 50.41]  (5 quantiles 0.3-0.7)  [327s]

@@ -1,0 +1,3 @@
+D8: 3180 units, 100 taxa; split at z = 0.742 (station elevation (ft NAVD88))
+change in chi across the split: +845.1 (sum of per-taxon curvature changes, exact)
+[25s]

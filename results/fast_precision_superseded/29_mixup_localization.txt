@@ -1,0 +1,9 @@
+recovery of z* = 0.55 on merge gradients, 60 realizations
+
+    P    estimator     bias     RMSE       sd
+   80        mixup   +0.045    0.227    0.225
+   80        curve   +0.039    0.164    0.161
+  160        mixup   +0.034    0.207    0.206
+  160        curve   +0.018    0.117    0.117
+
+[total 12s]

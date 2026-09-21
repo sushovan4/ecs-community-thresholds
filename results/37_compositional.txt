@@ -1,0 +1,11 @@
+Does closure manufacture detections?  40 realizations, P = 160 units, S = 60 INDEPENDENT taxa, 199 permutations, alpha 0.05
+(no co-occurrence structure in any cell, so every rejection is a false positive; nominal rate 0.05)
+
+        cell    FPR   median p
+        open   0.03      0.472
+      closed   0.05      0.515
+  closed+tot   0.03      0.512
+  closed+ric   0.03      0.630
+         clr   0.10      0.448
+
+[total 2376s]

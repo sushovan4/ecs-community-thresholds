@@ -1,0 +1,4 @@
+C4: 26 units, 1170 columns, 84 taxa, sparsity 0.87
+mixup split: z-hat = 2002  T = 8.8559  p = 0.110 (199 unit permutations)  95% CI [1983, 2018]
+split grid: 15 quantiles from 0.15 to 0.85
+[751s]

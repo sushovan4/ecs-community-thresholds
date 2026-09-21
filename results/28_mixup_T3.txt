@@ -1,0 +1,4 @@
+T3: 143 units, 1711 columns, 22 taxa, sparsity 0.80
+mixup split: z-hat = 2021  T = 5.7203  p = 0.060 (199 unit permutations)  95% CI [2000, 2022]
+split grid: 15 quantiles from 0.15 to 0.85
+[139s]

@@ -166,4 +166,56 @@ d.set_title("(d)  permutation", loc="left", fontsize=8.5)
 for p_ in (a, b, c):
     p_.set_ylim(0, 0.9)
 save(fig, "fig4_operating_range")
+
+# ---- fig 5: the interaction test against the registered statistic ----------
+# numbers from results/26_mixup_split.txt, 27_mixup_stress.txt,
+# 29_mixup_localization.txt, 30_mixup_largeP_null.txt (transcribed with the
+# settings each file records).
+fig, ax = plt.subplots(1, 4, figsize=(11.2, 2.7))
+a, b, c, d = ax
+
+PS = [24, 40, 80, 160]
+a.plot(PS, [0.05, 0.03, 0.42, 0.72], "-o", color=PATINA, lw=1.9, ms=5,
+       label="interaction")
+a.plot(PS, [0.03, 0.03, 0.25, 0.57], "--s", color=COPPER, lw=1.6, ms=4.5,
+       label="curve statistic")
+a.plot(PS, [0.17, 0.03, 0.10, 0.03], ":o", color=PATINA, lw=1.1, ms=3,
+       alpha=.75, label="interaction, false positives")
+a.axhline(0.05, color=GRAY, lw=0.9, ls=":")
+a.set_xlabel("units $P$"); a.set_ylabel(r"power at $\alpha=.05$")
+a.set_xscale("log"); a.set_xticks(PS); a.set_xticklabels(PS)
+a.xaxis.set_minor_locator(matplotlib.ticker.NullLocator())
+a.set_title("(a)  power", loc="left", fontsize=8.5)
+a.legend(fontsize=7.5, loc="upper left")
+
+lab = ["Gauss", "80%", "40%", "15%", "p/a"]
+x = np.arange(5)
+b.bar(x - 0.19, [0.72, 0.68, 0.10, 0.03, 0.10], width=0.36, color=PATINA,
+      label="interaction")
+b.bar(x + 0.19, [0.60, 0.37, 0.13, 0.07, 0.13], width=0.36, color=COPPER,
+      label="curve statistic")
+b.set_xticks(x); b.set_xticklabels(lab, rotation=45, ha="right", fontsize=7)
+b.set_title("(b)  occupancy, $P=160$", loc="left", fontsize=8.5)
+b.legend(fontsize=7.5)
+
+c.bar([0 - 0.19, 1 - 0.19], [0.12, 0.03], width=0.36, color=PATINA)
+c.bar([0 + 0.19, 1 + 0.19], [0.15, 0.07], width=0.36, color=COPPER)
+c.axhline(0.05, color=GRAY, lw=0.9, ls="--")
+c.set_xticks([0, 1])
+c.set_xticklabels(["plot-level", "within-region"], rotation=45, ha="right",
+                  fontsize=7)
+c.set_ylabel("false-positive rate"); c.set_ylim(0, 0.2)
+c.set_title("(c)  regional confounding", loc="left", fontsize=8.5)
+
+d.bar([0 - 0.19, 1 - 0.19], [0.227, 0.207], width=0.36, color=PATINA)
+d.bar([0 + 0.19, 1 + 0.19], [0.164, 0.117], width=0.36, color=COPPER)
+d.set_xticks([0, 1]); d.set_xticklabels(["$P=80$", "$P=160$"], fontsize=7.5)
+d.set_ylabel("RMSE of $\\hat z$")
+d.set_title("(d)  localization", loc="left", fontsize=8.5)
+
+for p_ in (a, b):
+    p_.set_ylim(0, 1.0)
+fig.subplots_adjust(wspace=0.42)
+save(fig, "fig5_interaction")
+
 print("all figures written to paper/figs/")

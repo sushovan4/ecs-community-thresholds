@@ -1,0 +1,8 @@
+D6 (seed 20260920): 207 units, 100 taxa; 41 pure & reliable indicators
+sumz change points (gradient units):
+         cp 0.05 0.10 0.50 0.90 0.95
+sumz-  3.40 2.04 2.04 3.40 3.40 5.44
+sumz+  2.04 1.02 1.02 2.04 5.44 9.52
+fsumz- 3.40 2.04 2.72 3.40 3.40 5.44
+fsumz+ 5.44 2.04 2.04 3.40 5.44 9.52
+[1290s]

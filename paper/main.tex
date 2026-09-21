@@ -1,9 +1,26 @@
-\documentclass[preprint,11pt,authoryear]{elsarticle}
+% Two builds from one source.  Default: an 11pt preprint for arXiv.
+% With \def\ESAMODE{}: ESA's submission format -- double-spaced, 12pt,
+% continuously line-numbered (the `review' class option does all three),
+% as required by the ESA Manuscript Preparation Guide for Ecological
+% Monographs.  Build it with
+%   pdflatex -jobname=main_esa "\def\ESAMODE{}\input{main}"
+\ifdefined\ESAMODE
+  \documentclass[review,12pt,authoryear]{elsarticle}
+\else
+  \documentclass[preprint,11pt,authoryear]{elsarticle}
+\fi
 \usepackage{amsmath,amsthm}
 \usepackage{newtxtext,newtxmath}
 \usepackage{graphicx,booktabs}
 \usepackage{microtype}
 \usepackage[colorlinks,citecolor=teal,linkcolor=teal,urlcolor=teal]{hyperref}
+
+% ESA requires continuous line numbering on all pages of an initial
+% submission; elsarticle's `review' option supplies double spacing but not
+% the numbers, so add them here.  `mathlines' numbers display equations too.
+\ifdefined\ESAMODE
+  \usepackage[mathlines]{lineno}
+\fi
 
 \theoremstyle{remark}
 \newtheorem{remark}{Remark}
@@ -16,57 +33,66 @@
 \makeatother
 
 \begin{document}
+\ifdefined\ESAMODE\linenumbers\fi
 
 \begin{frontmatter}
 
-\title{Locating community thresholds along environmental gradients with Euler
-characteristic surfaces}
+\title{Detecting and locating community reorganization along environmental
+gradients with Euler characteristic summaries}
 
 \author[gwu]{Sushovan Majhi\corref{cor}}
 \ead{s.majhi@gwu.edu}
 \cortext[cor]{Corresponding author.}
-\author[mtu]{Robert Pal}
-\author[mtu]{Atish Mitra}
+\author[mtubio]{Robert Pal}
+\author[mtumath]{Atish Mitra}
 \author[rf]{Ying Sun}
 
-\affiliation[gwu]{organization={George Washington University},
+\affiliation[gwu]{organization={Data Science Program,
+    George Washington University},
   city={Washington, DC}, country={USA}}
-\affiliation[mtu]{organization={Montana Technological University},
+\affiliation[mtubio]{organization={Department of Biological Sciences,
+    Montana Technological University},
   city={Butte, MT}, country={USA}}
-\affiliation[rf]{organization={Rare Flora, Inc.}, country={USA}}
+\affiliation[mtumath]{organization={Department of Mathematical Sciences,
+    Montana Technological University},
+  city={Butte, MT}, country={USA}}
+\affiliation[rf]{organization={Rare Flora, Inc.},
+  city={Riverside, CA}, country={USA}}
 
 \begin{abstract}
-Whether degraded plant communities respond to contamination smoothly or at
-thresholds decides where remediation effort pays. The standard tools---threshold indicator taxa analysis (TITAN), gradient forest, breakpoints on
-ordination axes---assemble a community threshold from taxon-level abundance
-change, and so cannot see a community whose taxa rearrange their co-occurrence
-structure while each abundance profile stays put. We summarize co-occurrence
-structure within sliding windows of plots by the Euler characteristic of a
-flag complex, indexed by edge count so that connectance is fixed and only
-arrangement varies, and locate the change with a pooled two-sample split, a
-plot-permutation test, and a within-window bootstrap. The indexing is
-essential: under a similarity-indexed filtration, edge density alone separates
-simulated communities more strongly than the Euler characteristic does.
-Fixed on simulated gradients before any field data were analyzed, the
-estimator recovers a known threshold (RMSE 0.10 of gradient span at 160
-plots) and holds false-positive rates near nominal. It and TITAN each miss
-the other's signal: pure abundance shifts versus co-occurrence
-reorganizations. Because the Euler characteristic is a sum of local
-curvatures, a detected change decomposes exactly into per-taxon shares, so
-the method also names the taxa that rearranged. Applied under pre-registration to eight
-public gradients, it detects in one: a twenty-year Everglades insect panel,
-where the five taxa carrying half the change are none of TITAN's indicator
-taxa. We map the operating range that
-explains the rest, including a collapse in power from 0.60 on Gaussian
-abundances to 0.13 on realistic sparse counts, and a threefold
-over-rejection by plot-level permutation where the gradient is spatially
-structured. Python and R implementations are released.
+Threshold indicator taxa analysis, gradient forest and breakpoints on
+ordination axes all assemble a community threshold from taxon-level
+abundance change, and so cannot see a community whose taxa rearrange who
+co-occurs with whom while each abundance profile stays put. We summarize
+co-occurrence structure by the Euler characteristic of a flag complex on the
+taxon correlation graph, indexed by edge count so that connectance is fixed
+by construction and only arrangement varies. The indexing is essential:
+under a similarity-indexed filtration, edge density alone separates
+simulated communities more strongly than the Euler characteristic does. Two
+instruments run on this summary. A windowed split statistic, pre-registered
+on simulated gradients before any field data were seen, locates the change.
+A second test recodes the same data so that taxa, not windows, are the
+sample---each taxon a point given by its correlation profile on either side
+of a candidate split---and measures how far the two resulting clouds
+separate by an intersection Euler characteristic profile. The second detects
+better and locates worse, so the procedure has two stages. We map where each
+fails: power collapses below about half occupancy, plot-level permutation
+over-rejects two- to threefold under spatial confounding, and the
+interaction test
+is anti-conservative below roughly a hundred units, which sets a design
+floor. Applied under pre-registration with dated public amendments, it
+detects in seven of nine public gradients where the windowed statistic
+detects in two, and in a coastal ecotone whose incumbent change points were
+published independently---though the two channels disagree about where.
+Because the Euler characteristic is a sum of local curvatures, a detected
+change decomposes exactly into per-taxon shares. Python and R
+implementations are released.
 \end{abstract}
 
 \begin{keyword}
 ecological thresholds \sep co-occurrence networks \sep Euler characteristic
-\sep topological data analysis \sep mine-land reclamation \sep
-pre-registration
+\sep topological data analysis \sep permutation inference \sep
+operating range \sep pre-registration
 \end{keyword}
 
 \end{frontmatter}
@@ -181,28 +207,53 @@ network neuroscience for exactly this reason
 combined with an Euler characteristic filtration, nor applied to community
 ecology.
 
+A third thing, not anticipated when the study was registered, turned out to
+matter more than either: \textbf{what is counted decides what can be
+detected}. The natural estimator on the Euler characteristic surface
+compares groups of sliding-window curves, and a survey yields about ten
+windows however many plots it has, so its evidence is thin by construction.
+Recoding the same data so that the \emph{taxa} are the sample---each taxon a
+point given by its correlation profile on either side of a candidate split,
+and the test a measurement of how far the two resulting clouds have
+separated---raises the sample size from ten to the number of taxa, and with
+it the power to detect a reorganization on dense data at larger designs
+(Section~\ref{sec:mixup}). The gain is bounded and we are specific about its
+bounds: it is a factor of roughly $1.3$--$1.7$ rather than a doubling, it
+vanishes below about half occupancy, and the recoded test is
+anti-conservative below roughly a hundred units, which sets a design floor
+(Section~\ref{sec:mixloc}). The two instruments are also not
+interchangeable: the new one detects better and locates worse, so the
+procedure we recommend, and apply, has two stages
+(Section~\ref{sec:twostage}).
+
 This paper contributes, in order: (i) the demonstration that similarity-indexed
 topological summaries of co-occurrence structure are connectance measurements in
 disguise, and the connectance-controlled construction that repairs them
 (Sections~\ref{sec:complex}--\ref{sec:connectance}, \ref{sec:simfail});
 (ii) a threshold estimator on the resulting Euler characteristic surface---window rule, change statistic, bootstrap interval, and permutation test---selected on simulated gradients with known thresholds and stated precisely
 enough to be pre-registered, which it is, here, before any field data was seen
-(Section~\ref{sec:est}); (iii) a simulation study giving the estimator's
-recovery error, its power as a function of survey design, a negative result
+(Section~\ref{sec:est}); (iii) the interaction test built on the intersection
+Euler characteristic profile, which takes taxa rather than windows as its
+sample, together with the invalid null that the construction invites and the
+calibration that shows the valid one holds at the unit counts where it is
+applied (Sections~\ref{sec:mixup}, \ref{sec:mixloc}); (iv) a simulation study giving the estimators'
+recovery error, their power as a function of survey design, a negative result
 on a proposed sharpness diagnostic, and an operating range---effect size,
 taxon count, data type, threshold position, and the cost of spatial
-confounding---that says where the method stops working
-(Sections~\ref{sec:simgrad}--\ref{sec:limits}); (iv) evidence that the method and taxon-aggregative detection
-are complementary in both directions (Section~\ref{sec:titan}); (v) an exact attribution of a detected change to individual taxa through
+confounding---that says where each instrument stops working
+(Sections~\ref{sec:simgrad}--\ref{sec:mixloc}); (v) evidence that the method and taxon-aggregative detection
+are complementary in both directions (Section~\ref{sec:titan}); (vi) an exact attribution of a detected change to individual taxa through
 the discrete Gauss--Bonnet decomposition of $\chi$
 (Section~\ref{sec:curvature}), which on real data names taxa disjoint from
-those a taxon-level method names; (vi) pre-registered applications to eight
-public gradients and ten long-term series, reported in full whether they
-detect or not (Sections~\ref{sec:public}, \ref{sec:program}); and
-(vii) the pre-registered analysis protocol for the Butte Hill restoration
+those a taxon-level method names; (vii) pre-registered applications to
+public gradients and long-term series, reported in full whether they
+detect or not, and the pre-registered cross-dataset test of whether
+structure changes before composition (Sections~\ref{sec:public},
+\ref{sec:program}, \ref{sec:ordering}); and
+(viii) the pre-registered analysis protocol for the Butte Hill restoration
 network (Section~\ref{sec:butte}).
 
-\section{Materials and Methods}
+\section{Methods}
 
 \subsection{Data and notation}
 \label{sec:data}
@@ -228,6 +279,21 @@ across plot subsets of differing productivity. A taxon with no variation
 within $A$ (typically, absent from every plot in it) has undefined
 correlation; it is assigned distance $1$ to every other taxon, so that it
 enters the filtration only after all positively correlated pairs.
+
+\begin{remark}[Closure]
+\label{rem:closure}
+Reading a correlation matrix invites the oldest objection in the subject:
+correlations among the parts of a constant-sum composition are negatively
+biased by the constraint itself \citep{pearson1897spurious}, which is why
+co-occurrence inference on relative abundances is done in log-ratio
+coordinates \citep{aitchison1982, gloor2017microbiome} or with estimators
+built for the problem \citep{friedman2012sparcc, kurtz2015spieceasi}.
+Nothing in the connectance control addresses this: indexing by edge count
+fixes how many pairs enter the complex, not which pairs are most
+correlated. Section~\ref{sec:closure} takes the objection seriously enough
+to simulate it, and states the conditions under which it does and does not
+threaten the inference.
+\end{remark}
 
 For a threshold $r$ let $G(r)$ be the graph on the $S$ taxa with an edge wherever
 $d(i,j) \le r$, and let $K(r)$ be its flag complex: the simplicial complex whose
@@ -334,6 +400,127 @@ covering a quarter of the gradient, structure inside $\pm W/2$ of the true
 threshold is mixed by construction, and the simulations bear this out---recovery error tracks window width, not the choice of statistic. Surveys
 wanting sharper localization need more plots, not a cleverer estimator.
 
+\subsection{A second instrument: the interaction test}
+\label{sec:mixup}
+
+The estimator of Section~\ref{sec:est} has a structural weakness that no
+amount of data repairs. Its unit of evidence is a \emph{window curve}: a
+survey of $P$ plots yields about ten windows however large $P$ is, because
+the window rule scales the windows with the survey. The two-sample
+comparison therefore runs at an effective sample size near ten, and the
+permutation test inherits that. Section~\ref{sec:power} measures the
+consequence---power $0.66$ at $P = 160$ for a strong reorganization, and
+$0.18$ at $P = 80$---and
+Section~\ref{sec:limits} shows it collapsing on the sparse count matrices
+that real surveys produce.
+
+The remedy is to change what is being counted. Fix a candidate split of the
+gradient-ordered units into a low set $A$ and a high set $B$, and let
+$C_A, C_B \in [-1,1]^{S \times S}$ be the taxon correlation matrices on the
+two sides. Taxon $i$ is then a \emph{pair} of points: its correlation
+profile $C_A(i,\cdot)$ below the split and $C_B(i,\cdot)$ above it. The
+question ``did the community's joint structure reorganize at this split?''
+becomes ``do the two clouds of $S$ taxon-profiles occupy the same region of
+profile space?''---and the sample size is now the number of taxa, tens to a
+hundred, not the number of windows.
+
+Concretely, pool the $2S$ profiles, project them to $d_0 = 4$ dimensions by
+principal components computed on the pooled cloud---label-blind, so the
+projection carries no information about which side a point came from---and
+write $a, b \subset \mathbb{R}^{d_0}$ for the resulting clouds. For a radius
+$r$ let $U(a;r) = \bigcup_{x \in a} B(x,r)$. The \emph{intersection Euler
+characteristic profile} is
+\[
+  \Delta\chi(r) \;=\; \chi\bigl(U(a;r) \cap U(b;r)\bigr)
+  \;=\; \chi\bigl(U(a;r)\bigr) + \chi\bigl(U(b;r)\bigr)
+      - \chi\bigl(U(a \cup b;r)\bigr),
+\]
+each term computed exactly from the Alpha complex nerve of the corresponding
+ball union \citep{maria2014gudhi}, so the profile costs three Euler
+characteristic curves and no persistence computation. The scalar summary is
+the normalized integral
+\[
+  T \;=\; \frac{1}{r_{\max}} \int_0^{r_{\max}} \bigl|\Delta\chi(r)\bigr|\,dr ,
+\]
+dimensionless, hence invariant to the scale of the profiles; $r_{\max}$ is
+set from the clouds' own diameter on a 60-point grid. Two clouds that
+interpenetrate share ball unions at small $r$ and give large $T$; two clouds
+that have separated intersect only late and give small $T$. \emph{Small $T$
+is evidence of reorganization}---the reverse of the usual convention, and a
+consequence of measuring overlap rather than difference.
+
+The test statistic is $T^\ast = \min_s T(s)$ over a grid of candidate splits
+at unit quantiles, and significance comes from the same permutation
+principle used throughout: permute the units' gradient positions, rebuild the
+correlation matrices, the projection, the profiles and the minimization, and
+count replicates with $T^\ast_b \le T^\ast$. Because every replicate repeats
+the minimization, the multiplicity of the split search is paid for exactly,
+and the $p$-value is valid whatever the grid contains.
+
+What that argument does and does not deliver is worth stating precisely,
+because it is the paper's only inferential claim about this statistic. Under
+the null that the units' gradient positions are exchangeable, the
+permutation distribution is exact by the usual rank argument, and the
+argument is generic---it uses nothing about $\Delta\chi$ beyond its being a
+fixed function of the data. Exchangeability is the substantive assumption,
+and Section~\ref{sec:limits} shows it failing under regional structure and
+what to do about it. Everything beyond exactness---the null moments of
+$\Delta\chi$, analytic power, and the behavior of the statistic when Betti
+numbers cancel rather than the overlap vanishing---is open, and we make no
+claim on it here; the calibration reported below is simulation, not theory.
+A dedicated statistical treatment of inference for intersection profiles---exactness in both directions, null moments, and sample-size calculation---is
+in preparation separately; this paper deliberately claims none of it.
+
+\begin{remark}
+A cheaper null was tried first and is \emph{invalid} in this encoding; we report it because
+the failure is instructive and would recur for anyone building this test.
+Swapping each taxon's two profiles independently between the two clouds---a
+per-taxon cloud swap, not to be confused with the sign-flip calibration used
+for paired comparisons in the two-sample literature---appears to give an
+exact paired null. It does not: the observed clouds are
+internally coherent---all-$A$ against all-$B$---while a flipped cloud is a
+mixture of both regimes, so the mixture's overlap is systematically larger
+than the observed one whether or not anything changed. On simulated
+gradients the cloud-swap null rejected threshold and no-change gradients at
+the same rate ($p = 0.005$ on both). The unit permutation, which rebuilds
+the coherence structure under the null, is the correct one.
+\end{remark}
+
+The invariant itself is not ours to claim. The intersection Euler
+characteristic profile, its Euler calculus and its stability are established
+in \citet{kawamura2026intersection}, and it has been used to certify when two
+evolving point clouds cease to interact \citep{majhi2026regime}. What this
+paper contributes is the ecological encoding---taxa as points, correlation
+profiles as coordinates, a gradient split as the two clouds---the
+gradient-permutation null appropriate to that encoding, which is not the
+label-exchangeability null of the two-sample setting, and the demonstration
+that together they convert a weak detector into a usable one.
+
+\subsection{Two stages, and which does which job}
+\label{sec:twostage}
+
+Detection and localization are different jobs, and Section~\ref{sec:mixloc}
+shows that the two instruments are not equally good at both. The procedure
+used for every field analysis below, fixed in advance of the results it
+produces (Section~\ref{sec:program}), is therefore:
+
+\begin{enumerate}
+\item \emph{Detect} with the interaction test of Section~\ref{sec:mixup}:
+does the joint structure change with the gradient at all? Where the units
+are spatially grouped, the within-region permutation of
+Section~\ref{sec:limits} is the test of record.
+\item \emph{Locate}, when detection succeeds, with the connectance-indexed
+split statistic of Section~\ref{sec:est}, which recovers a known threshold
+with roughly half the error of the interaction statistic's own located
+split (RMSE $0.117$ against $0.207$ at $P = 160$).
+\item \emph{Attribute} the located change to taxa through the curvature
+decomposition of Section~\ref{sec:curvature}.
+\end{enumerate}
+
+Each stage answers the question it is best at, and the division of labor was
+settled on simulated gradients with known thresholds rather than on the
+field data.
+
 \subsection{Attribution: which taxa carry a change}
 \label{sec:curvature}
 
@@ -356,8 +543,24 @@ this way, and the attribution answers, in the method's own terms, the
 question a taxon-level method answers by construction: which species are
 involved.
 
-\section{Simulation study}
+\section{Results}
 \label{sec:sim}
+
+The results run in the order the instruments were built. We first establish
+on simulated data that a similarity-indexed summary measures connectance
+rather than shape, and that indexing by edge count repairs it
+(Sections~\ref{sec:simfail}--\ref{sec:simgrad}); then map where each
+instrument works and fails---power, survey design, sparsity, spatial
+confounding, compositional closure, and the design floor below which the
+interaction test must not be used
+(Sections~\ref{sec:power}--\ref{sec:mixloc}); then ask what the topological
+summary buys over its natural competitors, and what it shares with
+taxon-level detection (Sections~\ref{sec:swap}--\ref{sec:titan}). Only then
+do we turn to field data (Sections~\ref{sec:public}--\ref{sec:ecotone}).
+Every dataset of the survey programme was registered before it was analyzed;
+the two transcriptomic matrices pre-date the registration programme and the
+one anchored run performed after its primary result was seen is labelled as
+such where it appears.
 
 \subsection{Indexing by similarity fails}
 \label{sec:simfail}
@@ -454,8 +657,8 @@ resolution-limited, not statistic-limited.
 \subsection{Power, false positives, and sharpness}
 \label{sec:power}
 
-This section turns the switchgrass failure of Section~\ref{sec:public} into
-design guidance: the question a survey must answer in advance is what plot
+This section turns the underpowered negatives of Section~\ref{sec:public}
+into design guidance: the question a survey must answer in advance is what plot
 count per window resolves an effect worth caring about. We report the
 permutation test's rejection rate on sharp-threshold gradients and its false
 positive rate on no-change gradients at three design sizes, and the bootstrap
@@ -596,6 +799,186 @@ is the nominal level.}
 \label{fig:limits}
 \end{figure}
 
+\subsection{Closure: when compositional bias can and cannot fake a detection}
+\label{sec:closure}
+
+Remark~\ref{rem:closure} raises the compositional objection; this section
+answers it, and the answer has two halves, one reassuring and one not.
+
+The reassuring half is structural. Closure biases the correlations, but the
+permutation null is built from the same biased correlations. Permuting the
+units' gradient positions leaves every unit's composition exactly as it was;
+only the assignment of units to sides of a split changes. So a closure bias
+that is the \emph{same} everywhere along the gradient enters the observed
+statistic and each of its replicates identically, and cannot on its own
+produce a rejection. This is a real protection, and it is not available to
+descriptive network comparisons, which is where most of the compositional
+horror stories in the co-occurrence literature come from.
+
+The half we expected not to be reassuring is that the bias need not be
+homogeneous.
+Its strength depends on the total that the parts are divided by, so if total
+abundance, or richness, or sampling completeness changes systematically
+along the gradient, then so does the induced correlation structure---and the
+two sides of a split then differ for a reason that has nothing to do with
+who co-occurs with whom. We expected that to be a genuine failure mode, and
+it is the one we set out to measure.
+
+It did not appear. On $P = 160$ units of $S = 60$ \emph{independent} taxa---no co-occurrence structure anywhere, so every rejection is a false
+positive---we compared open counts against the same counts divided by their
+unit total, with and without a gradient in the total and in richness, and
+against centred-log-ratio coordinates
+(Table~\ref{tab:closure}; 40 realizations, 199 permutations).
+
+\begin{table}[t]
+\centering
+\caption{Closure on null data. Independent taxa throughout, so the nominal
+rate is $0.05$ and every rejection is a false positive. ``closed'' divides
+each unit's counts by its total; ``$+$total'' additionally raises total
+abundance eightfold along the gradient; ``$+$richness'' raises the number of
+taxa able to occur; ``CLR'' is the $+$total data in centred-log-ratio
+coordinates. 40 realizations, 199 unit permutations.}
+\label{tab:closure}
+\begin{tabular}{lcc}
+\toprule
+Observation model & false-positive rate & median $p$ \\
+\midrule
+open counts                  & 0.03 & 0.472 \\
+closed, homogeneous          & 0.05 & 0.515 \\
+closed $+$ total gradient    & 0.03 & 0.512 \\
+closed $+$ richness gradient & 0.03 & 0.630 \\
+CLR of closed $+$ total      & 0.10 & 0.448 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Every closed cell sits within Monte Carlo error of the nominal rate,
+including the two built to break it: an eightfold rise in total abundance
+along the gradient gives $0.03$, and a rising richness ceiling gives $0.03$.
+The permutation null absorbs closure more completely than we expected it
+to, and the mechanism is the one given above---the composition of each unit
+is carried intact through every replicate, so closure is a property of the
+data that the null sees too.
+
+One cell does not behave, and it is the one that was supposed to be the
+remedy. Centred-log-ratio coordinates rejected in $0.10$ of null runs, twice
+nominal and the worst cell in the table. We do not have a theory for it; the
+natural suspect is the zero replacement, which on sparse data invents
+structure in the imputed entries that the permutation cannot see as
+imputation. The practical reading is that CLR is not a free safety
+measure here, and a disagreement between raw and log-ratio analyses should
+not be resolved by assuming the log-ratio version is the trustworthy one.
+
+Two consequences for practice follow. First, the substrates used here are mostly
+\emph{not} closed: Everglades abundances are counts per sampling throw,
+Cedar Creek is biomass in g\,m$^{-2}$, the EPA benthic matrices are counts
+per standardized sample, and Niwot is hit counts. These are effort-standardized
+densities, free to vary in total, and the constant-sum constraint
+does not apply to them. The one genuinely closed substrate in this study is
+percent cover, and it is the substrate of two datasets here: the coastal
+marsh ecotone of Section~\ref{sec:ecotone} and the CRMS matrix, both of
+which detect. Neither detection can be dismissed as a closure artifact on
+the evidence of Table~\ref{tab:closure}, but neither is insulated by it
+either, since that table simulates closure without a real reorganization
+rather than the converse.
+Second, where cover or relative abundance \emph{is} the substrate, we report
+the log-ratio analysis beside the primary one rather than choosing between
+them, and a survey whose total abundance trends strongly along its gradient
+should treat a detection on closed data as unresolved until the log-ratio
+version agrees.
+
+\subsection{The interaction test: power, calibration, and localization}
+\label{sec:mixloc}
+
+The operating range just mapped is the operating range of the window-curve
+statistic. We now put the interaction test of Section~\ref{sec:mixup}
+through the identical simulations, changing nothing but the statistic:
+same gradients, same permutation principle, same $\alpha$.
+
+\emph{Power, and the design floor.} On the merge gradient with 40
+realizations and 199 unit permutations, the interaction test rejects at
+$0.05$, $0.03$, $0.42$ and $0.72$ for $P = 24$, $40$, $80$ and $160$,
+against $0.03$, $0.03$, $0.25$ and $0.57$ for the registered statistic run
+at the identical Monte Carlo budget. Those last figures sit below the
+$0.00/0.08/0.18/0.66$ of Section~\ref{sec:power} because that section used
+499 permutations and 50 realizations where this comparison uses 199 and 40.
+The two instruments are compared under matched settings, which is what makes
+the ratio meaningful; neither series should be read as the registered
+statistic's definitive power. The
+gain at the two larger designs is real but modest---roughly a factor
+$1.3$--$1.7$, not a doubling---and it comes with a cost that has to be
+stated first, because it bounds where the test may be used at all: its
+false-positive rates are $0.17$, $0.03$, $0.10$ and $0.03$. At $P = 24$ the
+test rejects true nulls more than three times as often as it should, and at
+$P = 80$ twice as often. \emph{The interaction test is not calibrated at
+small unit counts and must not be used there}; the design floor we can
+defend from these simulations is on the order of a hundred units, and the
+next paragraph establishes that it is well behaved far above it.
+
+\emph{Calibration at survey scale.} Because the field datasets of
+Section~\ref{sec:program} run to hundreds and thousands of units---far
+beyond any design size used to develop the test---we checked the null
+behavior there directly, on gradients with no threshold and no association
+with $z$. Over 40 realizations at 199 permutations the false-positive rate
+is $0.05$, $0.05$ and $0.07$ on Gaussian abundances at $P = 400$, $800$ and
+$1600$, and $0.03$, $0.07$ and $0.00$ on $40\%$-occupancy counts, with
+median null $p$-values between $0.39$ and $0.50$. Seven of the nine spatial
+datasets have between $148$ and $3180$ units and sit in that calibrated
+regime. The exceptions are stated where they arise rather than here: Niwot
+at 81 units, the two Everglades demonstration matrices at 125--126, and all
+thirteen temporal series at 20--147, every one of which is read against the
+design floor rather than against its $p$-value alone.
+
+\emph{Sparse counts: no advantage.} Section~\ref{sec:limits} found sparse
+counting to be what stops the curve statistic. The interaction test does not
+repair it. At $P = 160$ its power is $0.72$ on Gaussian abundances
+(registered statistic $0.60$) and $0.68$ at $80\%$ occupancy ($0.37$), but
+$0.10$ at $40\%$ ($0.13$), $0.03$ at $15\%$ ($0.07$) and $0.10$ on
+presence/absence ($0.13$). Below roughly half occupancy the two instruments
+are indistinguishable, and if anything the newer one is slightly worse. The
+gain is confined to dense data. We report this plainly because an earlier
+version of these simulations, computed with inexact geometric predicates,
+appeared to show a large advantage on sparse counts; it did not survive the
+correction described in Section~\ref{sec:avail}.
+
+\emph{Exchangeability.} Under the eight-region confounding simulation that
+made plot-level permutation over-reject threefold, the interaction test's
+plot-level false-positive rate is $0.12$ (registered statistic $0.15$) and
+its within-region rate $0.03$ ($0.07$). Plot-level permutation is
+anti-conservative for both instruments, and the within-region test remains
+the test of record wherever the gradient is spatially structured.
+
+\emph{Localization, where it loses.} Detection is not location. On merge
+gradients with a known threshold at $z^\ast = 0.55$ (60 realizations), the
+split that minimizes $T$ recovers it with RMSE $0.227$ at $P = 80$ and
+$0.207$ at $P = 160$; the registered window statistic, on the same
+realizations, gives $0.164$ and $0.117$. Both are nearly unbiased
+($+0.02$ to $+0.05$), so the difference is variance: minimizing a single
+scalar over a split grid is a noisier locator than averaging Cohen's $d$
+over a connectance grid. This is the entire reason the procedure of
+Section~\ref{sec:twostage} has two stages rather than one, and the division
+was fixed from this table before any field dataset was re-analyzed.
+Figure~\ref{fig:interaction} collects the four comparisons.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figs/fig5_interaction.pdf}
+\caption{The interaction test against the registered curve statistic, on
+identical simulations. (a) Power on the merge gradient against unit count (40 realizations, 199
+permutations, solid), with the interaction test's own false-positive rate
+(dotted with small markers); the horizontal line is $\alpha$. Below about a
+hundred units the test over-rejects and must not be used.
+(b) Power at $P = 160$ by data type: Gaussian abundances, Poisson-lognormal
+counts at mean occupancy $0.8$, $0.4$ and $0.15$, and presence/absence.
+(c) False-positive rate under eight-region confounding, by permutation
+scheme; dashed line is nominal. (d) Root mean squared error in recovering a
+known threshold. The interaction test gains on dense data at larger designs,
+gains nothing below half occupancy, is anti-conservative at small $P$, and
+localizes worse---which is why the field procedure uses each instrument for
+the job it is better at, and only above the design floor.}
+\label{fig:interaction}
+\end{figure}
+
 \subsection{The summary is modular---and when topology is necessary}
 \label{sec:swap}
 
@@ -611,53 +994,43 @@ pairwise distance, which together are the concrete form of the objection
 
 The comparison needs gradient types that pull these apart. In the merge
 scenario of Section~\ref{sec:simgrad} the correlation distribution and the
-arrangement change together, so everything detects and nothing is learned
-about attribution. We add two scenarios on a fixed module graph of six
-modules, each carrying exactly two cross-module links of equal weight: a
-\emph{rewiring} gradient, where the module graph switches from two triangles
-to one hexagon at $z^\ast$---the degree structure and hence the expected
-pairwise-correlation distribution are identical on both sides, only the
-arrangement changes---and a \emph{strength} gradient, where the module
-graph never changes but the cross-link weight halves at $z^\ast$, which
-moves the correlation distribution while preserving the edge ranking and
-therefore, at matched connectance, the complex itself. One wrinkle is
-built in and reported: windows straddling $z^\ast$ mix
-the two regimes, so a diluted transition signal leaks into distribution
-summaries even on the rewiring gradient; the question the experiment answers
-is how much signal each summary family retains where the other's is
-designed away. These two scenarios use stronger coupling than
-Section~\ref{sec:simgrad} (factor loading $\rho = 0.75$, mixing weight
-$0.9$) so that cross-module links exceed the sampling noise of a window's
-correlations. One adjustment to the statistic was needed for the comparison:
-integer-valued Betti curves can have zero within-group variance, where
-Cohen's $d$ is undefined, so each summary's curves are standardized and the
-pooled within-group standard deviation is floored at $0.05$ of the
-between-window standard deviation. The floor does not bind for $\chi$, whose
-statistic is unchanged by it.
+arrangement change together, so everything detects and nothing is learned.
+We add two scenarios on a fixed module graph of six modules each carrying
+two equal cross-module links: a \emph{rewiring} gradient, where the module
+graph switches from two triangles to one hexagon at $z^\ast$, holding the
+degree structure and hence the expected pairwise-correlation distribution
+identical on both sides; and a \emph{strength} gradient, where the module
+graph never changes but the cross-link weight halves, which moves the
+correlation distribution while preserving the edge ranking and therefore,
+at matched connectance, the complex itself. Both use stronger coupling than
+Section~\ref{sec:simgrad} ($\rho = 0.75$, mixing $0.9$). One artifact is
+built in and reported: windows straddling $z^\ast$ mix the two regimes, so a
+diluted signal leaks into distribution summaries even on the rewiring
+gradient. Integer-valued Betti curves can have zero within-group variance,
+so each summary is standardized and the pooled within-group standard
+deviation floored at $0.05$ of the between-window standard deviation; the
+floor does not bind for $\chi$.
 
-Table~\ref{tab:swap} reports the comparison at $P = 160$ over 100
-realizations (statistics) and 50 realizations at 499 permutations
-(rejection); at $P = 80$ no summary rejects any structured scenario at more
-than $0.12$, consistent with Section~\ref{sec:power}. Three findings. On
-the \emph{strength} gradient the designed asymmetry is confirmed: the
-distance quantile rejects at $0.34$ while $\chi$ sits near its false-alarm
-rate ($0.12$ against $0.06$)---matched-connectance summaries are blind to
-distribution-only change, and distribution summaries see it, exactly as
-constructed. On the \emph{rewiring} gradient the roles invert---but
-weakly: the shape summaries' statistics separate from null ($\chi$ 1.74
-against 1.38; modularity 1.97 against 1.46, rejecting at $0.18$ against
-$0.02$) while the distance quantile stays below its null level (1.84
-against 1.98), yet no summary clears $\alpha = 0.05$ reliably---arrangement-only reorganization is the hardest signal in this study, real
-in the statistics and beyond dependable detection even at 160 single-survey
-plots. And the transition-window leak declared above is visible: the mean
-pairwise distance rejects rewiring at $0.14$ purely through the mixing of
-regimes in straddling windows. On scenarios where detection occurs,
-matched-connectance modularity is at least as strong as $\chi$ (merge
-statistic $4.28$ against $3.13$; recovery RMSE $0.074$ against $0.102$)---a comparison we report rather than bury, because the framework is
-summary-agnostic by design: $\chi$ is retained for its stability guarantee,
-its deterministic clique-count computation, and its published
+Table~\ref{tab:swap} reports the comparison at $P = 160$ (100 realizations
+for statistics, 50 at 499 permutations for rejection); at $P = 80$ no
+summary rejects any structured scenario above $0.12$. The designed asymmetry
+is confirmed in both directions. On \emph{strength} the distance quantile
+rejects at $0.34$ while $\chi$ sits near its false-alarm rate ($0.12$
+against $0.06$): matched-connectance summaries are blind to
+distribution-only change. On \emph{rewiring} the roles invert, but
+weakly---the shape summaries separate from null ($\chi$ $1.74$ against
+$1.38$; modularity $1.97$ against $1.46$) while the distance quantile stays
+below its null level, yet nothing clears $\alpha = 0.05$ reliably.
+Arrangement-only reorganization is the hardest signal in this study: real in
+the statistics, beyond dependable detection at 160 plots. The declared leak
+is visible, mean pairwise distance rejecting rewiring at $0.14$ purely
+through straddling windows. And where detection occurs, matched-connectance
+modularity is at least as strong as $\chi$ (merge statistic $4.28$ against
+$3.13$; RMSE $0.074$ against $0.102$)---reported rather than buried, because
+the framework is summary-agnostic by design. $\chi$ is retained for its
+stability guarantee, its deterministic clique counting and its
 transition-localization lineage, not for empirical dominance over its
-nearest shape-summary neighbor.
+nearest neighbour.
 
 \begin{table}[t]
 \centering
@@ -756,21 +1129,27 @@ $\chi$ split test (rejection at $\alpha=.05$) & 0.18 & 0.00 \\
 \end{tabular}
 \end{table}
 
-Neither result is a deficiency of either method; each is an instrument pointed
-at a different component of community change. The practical recommendation
+Table~\ref{tab:complement} sets the two side by side. Neither result is a
+deficiency of either method; each is an instrument pointed at a different
+component of community change. The practical recommendation
 falls out directly: run both, and read disagreement as information about
 \emph{which kind} of reorganization the gradient is driving. There is also
 an ecological reason to want the covariance channel read at all: the
 early-warning literature on critical transitions holds that changes in
 correlation structure can \emph{precede} the abundance collapses that
 taxon-level methods detect \citep{scheffer2009ews}---in which case a
-structural threshold is a leading indicator, a boundary to act at before
-species are lost rather than after. We note, without claiming it, that on
-the Everglades data our point estimate falls on the early side of TITAN's
-decliner change point (Section~\ref{sec:public}); whether that ordering is
-real is exactly what an adequately powered design can test.
+structural threshold would be a leading indicator, a boundary to act at
+before species are lost rather than after. That motivation is worth stating
+because it is the practical reason to read the covariance channel at all,
+and because we registered it as a confirmatory test and it failed:
+Section~\ref{sec:ordering} finds no systematic ordering across seven
+systems. The Everglades panel, where our estimate does fall on the early
+side of TITAN's change point, turns out to be the strongest case in the set
+rather than a representative one. The reason to read the covariance channel
+is therefore not that it fires first; it is that it fires elsewhere, and on
+different species.
 
-\section{Two Everglades datasets: a benchmark and a detection}
+\subsection{Two Everglades datasets: the incumbent's benchmark, and a powered panel}
 \label{sec:public}
 
 \paragraph{A real ecological gradient: the Everglades phosphorus data.}
@@ -815,6 +1194,30 @@ single-survey design lacks. Figure~\ref{fig:glades} shows the run
 whole: the standardized window curves climb through the regulatory range,
 crossing their mean almost exactly at $\hat z$.
 
+\paragraph{The same benchmark, through the second instrument.} The
+interaction test was not part of the amendment that registered the
+second pass, because that amendment listed the survey datasets and this one
+is the paper's demonstration benchmark. We therefore registered it
+separately, in a dated public amendment written before the run, which
+recorded the expectation that 126 sites of sparse counts made detection
+roughly a coin flip and a null uninformative.
+
+It rejects, at $p = 0.005$ on both split grids, placing its split at
+$36.2$~$\upmu$g/L TP---close to TITAN's own increaser change point of
+$32.5$ (interval $21.7$--$34.1$) on the identical matrix. The same data that
+the windowed statistic could not resolve at $p = 0.30$ yields a detection
+once the taxa rather than the windows are the sample, and it does so at a
+unit count just above the design floor of Section~\ref{sec:mixloc}. This is
+the cleanest available demonstration that the gain is instrumental and not a
+matter of which dataset was chosen: same sites, same gradient, same
+log-transform, same permutation principle, different estimator. One
+difference is not cosmetic and we state it: the interaction test applies the
+hundred-taxon cap that every dataset in Section~\ref{sec:program} carries,
+so it sees 100 of the 164 taxa the windowed run used. The cap retains the
+most widely occurring taxa, and Section~\ref{sec:limits} finds power flat
+between 60 and 120 taxa, so we do not think it explains the difference---but
+it is a difference, not an identity.
+
 \begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{figs/fig3_glades.pdf}
@@ -824,8 +1227,9 @@ $\chi(m)$ at each of the twelve edge counts, per window; the heavy line is
 their mean. Vertical marks: the 10~$\upmu$g/L numeric criterion (dashed),
 $\hat z = 12.5$ (solid), and TITAN's decliner and increaser change points
 with their bootstrap intervals (dotted, shaded), regenerated on the
-identical matrix. The permutation test does not reject ($p = 0.30$), and
-the figure is reported as description, not detection.}
+identical matrix. The windowed permutation test does not reject ($p = 0.30$) and the figure
+is reported as description; the interaction test on the same matrix does
+reject ($p = 0.005$, $\hat z = 36.2$~$\upmu$g/L).}
 \label{fig:glades}
 \end{figure}
 
@@ -853,9 +1257,12 @@ An independent 24-site programme in the same wetland does not reject
 ($p = 0.61$, as its 6-unit windows predict) but places its point estimate
 at 1103 days, within five days of the first.
 
-TITAN on the same matrix places its decliner change point at 2561 days and
-its increaser change point at 338 days, so the structural change point
-falls between the two taxon-level ones.
+TITAN on the same matrix places its community change point at 2561 days,
+above the structural estimate. Its individual increaser taxa have change
+points from 263 to 2561 days, so the two channels overlap in range while
+differing in where they concentrate; we do not read a clean ordering from a
+single dataset, and Section~\ref{sec:ordering} tests the question across
+systems instead.
 
 \paragraph{Which taxa carry the change.} Because $\chi$ is a sum of local
 curvatures (Section~\ref{sec:curvature}), the detected change decomposes
@@ -865,116 +1272,239 @@ exactly into per-taxon contributions, which sum to the change in $\chi$
 (individual permutation $p$ between $0.015$ and $0.045$; none survives
 Benjamini--Hochberg correction across 22 taxa, minimum $q = 0.18$, so these
 are leading contributors rather than individually significant). None is one
-of TITAN's eight pure and reliable indicator taxa, and TITAN's indicators
-contribute at most $1\%$ each to the structural change. The two
+of TITAN's eight pure and reliable indicator taxa; the largest share carried
+by any indicator is $8\%$, and five of the eight carry $2\%$ or less. The two
 instruments name disjoint sets of species on the same data: the taxa whose
 abundance tracks the gradient are not the taxa whose co-occurrence
 partnerships rearrange.
 
-\paragraph{Public omics data as stress tests.}
-Two public transcriptomic datasets were analyzed earlier in the development
-of the method, before the survey datasets of Section~\ref{sec:program} were
-assembled, and we report them because the failure modes they exposed shaped
-the estimator. The construction is agnostic to what the ``taxa'' are, and
-co-expression gives it the matrix shape of Section~\ref{sec:data} at
-realistic size and noise. Both results bound what the pipeline can claim;
-neither supports it.
+\paragraph{Two transcriptomic stress tests, reported for completeness.}
+Before the survey datasets were assembled, the construction was tried on two
+public transcriptomic matrices, on the reasoning that it is agnostic to what
+the ``taxa'' are. Neither supports the method and both are reported here
+because the programme's rule is that nothing goes in a file drawer.
+\emph{Arabidopsis thaliana} expression across 690 accessions
+\citep{kawakatsu2016} split by flowering time gave
+$\max|\mathrm{Cohen}\ d| = 1.61$ at $p = 0.040$ against a heavy-tailed null
+reaching $2.63$---a hint at best, from a single assay condition with no
+environmental axis, so the surface degenerates to one curve and the dataset
+structurally cannot test the claim. Switchgrass under drought
+\citep{meyer2014switchgrass} supplies an ordered diel axis and shows a
+localized separation peak of the predicted shape ($0.51$, $2.26$, $0.30$,
+$0.27$), but neither the peak ($p = 0.135$) nor its variation along the axis
+($p = 0.115$) survives permutation, at six to thirteen samples per cell.
+Both are underpowered rather than negative, and the max-statistic whose null
+spans $0.59$--$4.26$ is precisely the small-sample instability that motivated
+the pooled statistic. Full outputs are in the repository.
 
-\paragraph{Without a gradient, as a negative control.} \emph{Arabidopsis
-thaliana} expression across 690 accessions \citep{kawakatsu2016} split by
-flowering time gave $\max|\mathrm{Cohen}\ d| = 1.61$ with $p = 0.040$ over 199
-label permutations, against a heavy-tailed null reaching $2.63$. We read this
-as a hint at best: nothing was pre-registered, the statistic maximizes over the
-grid (the instability Section~\ref{sec:est} now avoids), and the assay is a
-single condition---there is no environmental axis, so the surface degenerates
-to one curve and the dataset structurally cannot test the claim.
-
-\paragraph{With an ordered axis, no detection.} Switchgrass under
-drought and re-watering \citep{meyer2014switchgrass} provides an ordered diel
-axis. Separations between control and drought across the axis were $0.51$,
-$2.26$, $0.30$ and $0.27$---a localized peak of the shape the method
-predicts---but against $199$ permutations of treatment label within time
-point, preserving cell sizes, neither the peak ($p = 0.135$) nor its variation
-along the axis ($p = 0.115$) was significant, with a null ranging to $4.26$.
-We therefore report no detection. The design is underpowered rather than the
-effect shown absent---six to thirteen samples per cell (most six to eight),
-and a max-statistic
-whose null spans $0.59$--$4.26$ is exactly the small-sample failure that
-motivated the pooled statistic and the power analysis of
-Section~\ref{sec:power}. The negative is informative about design, and it is
-why Section~\ref{sec:butte} is written as a test that can fail rather than a
-demonstration.
-
-\section{The instrument on eight public gradients}
+\subsection{The two-stage instrument on nine public gradients}
 \label{sec:program}
 
 A method's operating range is only useful if it is tested where the data
-are, so we applied the frozen estimator to every public dataset we could
-find that met three requirements fixed in advance: a taxa-by-unit abundance
-matrix, a measured ordered gradient per unit, and at least 40 units and 15
-taxa. Gradient variables were chosen from each dataset's metadata before
-download, and all choices, inclusions and exclusions were registered before
-any estimator ran. Table~\ref{tab:program} reports every dataset, detected
-or not.
+are, so we applied the procedure to every public dataset we could find that
+met three requirements fixed in advance: a taxa-by-unit abundance matrix, a
+measured ordered gradient per unit, and at least 40 units and 15 taxa.
+Gradient variables were chosen from each dataset's metadata before download,
+and all choices, inclusions and exclusions were registered before any
+estimator ran. The second pass with the interaction test was registered
+before it was applied to any of them, with the expectation---recorded in
+advance and, as it turned out, wrong---that most would remain null because
+their matrices are sparse. Table~\ref{tab:program} reports every dataset,
+detected or not, through both instruments and both split grids.
 
-\begin{table}[t]
-\centering
-\caption{The frozen estimator on eight public gradients, all pre-registered.
-$p$ is the registered 199-permutation test; $p_{\text{reg}}$ permutes
-within regions, the test that matters where the gradient is spatially
-structured (Section~\ref{sec:limits}). Everglades LT is the long-term
-insect panel of Section~\ref{sec:public}; the remaining rows are
-single-survey designs.}
-\label{tab:program}
-\small
-\begin{tabular}{llrrrr}
-\toprule
-Dataset & Gradient & Units & $\hat z$ & $p$ & $p_{\text{reg}}$ \\
-\midrule
-Everglades LT insects & days since dry & 148 & 1108 d & \textbf{0.045} & \textbf{0.040} \\
-EPA rivers \& streams & conductivity & 1914 & 131 & \textbf{0.015} & 0.34 \\
-Niwot alpine plants & snow depth & 81 & 101 cm & 0.025$^\ast$ & --- \\
-EPA streams, Appalachia & conductivity & 501 & 304 & 0.235 & 0.275 \\
-EMAP mine-drainage streams & conductivity & 572 & 46.9 & 0.140 & 0.145 \\
-EPA estuaries & sediment copper & 689 & 2.48 & 0.420 & 0.605 \\
-EPA lakes & total phosphorus & 1085 & 25.8 & 0.650 & 0.945 \\
-Cedar Creek (N addition) & N dose & 207 & 7.83 & 0.175 & 0.205 \\
-\bottomrule
-\end{tabular}
-\par\smallskip
-\footnotesize $^\ast$ the registered verdict; the same test at 1999
-permutations gives $p = 0.056$, so this detection is not stable.
-\end{table}
+\input{tab_program}
 
-One dataset detects and survives its regional control. A second, the
-national stream survey, rejects at $p = 0.015$ (stable at 1999
-permutations) but not once units are permuted within ecoregions
-($p = 0.34$): specific conductance varies between ecoregions for reasons
-that have nothing to do with the local community, and the stress map
-predicts exactly this failure mode. A third is borderline and unstable. The
-remaining five do not reject.
+\paragraph{What detects.} Eight of the nine reject under the registered
+rule, which requires the interaction test to reject and, where a region
+field exists, the within-region permutation to reject as well; only Cedar
+Creek fails it. Of those eight we count seven as evidence, setting Niwot
+aside for sitting below the design floor. The first-generation curve
+statistic rejects in three of the nine---and one of those three is Niwot,
+so on the same footing it counts two.
 
-We read this as the operating range of Section~\ref{sec:limits} asserting
-itself rather than as evidence that community structure is unresponsive.
-Six of the eight are sparse count matrices, where simulated power is
-$0.07$--$0.37$ rather than the $0.6$ of a Gaussian design; the one robust
-detection is the design with the most surveys per unit. A cross-dataset
-ordering test against TITAN's change points was registered in advance and
-required at least four detections; with one, it is reported here as
-underpowered and not run.
+The contrast is the paper's main empirical result. It is not a sample-size
+artifact: the seven have between 148 and 3180 units, the range in which
+Section~\ref{sec:mixloc} measures the interaction test's false-positive rate
+at $0.00$--$0.07$ on Gaussian and $40\%$-occupancy nulls. That bound is not
+the whole story at field sparsity, and we give the rest of it below.
 
-\paragraph{Time as the gradient.} The same estimator was applied with the
-gradient set to calendar time on ten long-term series (Everglades regions,
-Cedar Creek fields, the Niwot grid), asking whether structure reorganizes
-at a datable moment. None of the ten rejected. Their unit counts---20 to 35
-survey years---are below the range where the test has power, so this is a
-resolution limit and not evidence against temporal reorganization. Where a
-programme surveys several times a year, the survey occasion is the natural
-unit; the three Everglades series that this affords (143--147 occasions)
-give one detection (Shark River Slough, $p = 0.045$; $0.0495$ at 1999
-permutations), one marginal result ($p = 0.075$) and one null. Annual
-monitoring, in other words, rarely samples time densely enough for this
-instrument.
+Two rows need reading with the operating range in hand rather than off the
+$p$ column.
+
+\paragraph{Calibration at field sparsity.} The $0.00$--$0.07$ bound above
+comes from nulls at $40\%$ occupancy or better. Several of these matrices
+are far sparser, so we measured the false-positive rate there too, at the
+unit counts and column-per-unit ratios the datasets actually have (40
+realizations, 199 permutations). At $20\%$ occupancy and above the test is
+nominal ($0.05$ at 700 units, $0.07$ at 1100 units and $30\%$). At $10\%$
+occupancy it is mildly anti-conservative: $0.10$ at 700 units with one
+column per unit, and $0.12$ at 200 units with 29 columns per unit, the
+configuration Cedar Creek has. Monte Carlo error on these rates is about
+$0.05$, so the inflation is suggestive rather than established; it is also
+far too small to produce a $p$-value at the permutation floor, which is
+where the sparse detections here sit. We attach it as a caveat to the two
+sparsest rows rather than discounting them.
+
+\emph{Cedar Creek} does not detect: $p = 0.065$ free and $0.045$ within
+region, and the rule requires both. It is also the least stable row in the
+table---its located split moves to the gradient boundary, the two split
+grids disagree ($p = 0.005$ on the registered grid), and at $92\%$ zeros
+with 29 plot-years per unit it sits in the worst cell of the sparsity
+calibration ($0.12$ false positives). We report it as a null and do not
+attempt to adjudicate between the grids.
+
+\emph{Niwot} is the one design below the floor. Its 81 units sit under the
+hundred-unit threshold at which Section~\ref{sec:mixloc} finds the test
+anti-conservative, so although it rejects at $p = 0.005$ on both grids we
+decline to count it as evidence. It is retained in the table because the
+registration requires every dataset to be reported, not because we believe
+it.
+
+\paragraph{The split grid.} Amendment~5 fixed candidate splits at unit
+quantiles $0.30$--$0.70$; the analyses use $0.15$--$0.85$, because on the
+Everglades panel the narrow grid pinned the located split at its own
+boundary. The deviation is recorded in the public pre-registration, and
+because it is a deviation both grids are reported for every dataset. The
+verdicts agree everywhere except Cedar Creek. The change cannot affect
+validity---every permutation replicate minimizes over the same grid as the
+observed statistic, so the null is the distribution of the same function of
+the data---but it does affect the located split, which is why the procedure
+does not use the interaction statistic to locate.
+
+\paragraph{Time as the gradient, and why most of it is uninterpretable.}
+The same second pass was applied with the gradient set to calendar time on
+the thirteen registered long-term series (Table~\ref{tab:temporal}). Nine
+reject. We report, and believe, three of them.
+
+The reason is the design floor. Ten of the thirteen are annual series with
+20 to 35 survey years---well below the hundred units at which the
+interaction test becomes calibrated, and squarely in the range where
+Section~\ref{sec:mixloc} measures false-positive rates of $0.17$ at
+$P = 24$. Their $p$-values are not interpretable as evidence, and we do not
+interpret them. Had we reported these as detections, the paper would have
+claimed that structure reorganizes at a datable moment in seven of ten
+long-term monitoring programmes, which we would now have to withdraw.
+
+Three series clear the floor, because their programme samples five
+occasions a year rather than one: the Everglades occasion-level series at
+143--147 units. Two reject ($p = 0.005$ for Shark River Slough and for
+Water Conservation Area) and one does not ($p = 0.060$ for Taylor Slough).
+That is the honest temporal result, and it says what the first-generation
+analysis said for a different reason: \emph{annual monitoring rarely samples
+time densely enough for this instrument}. The remedy is not a better
+statistic; it is more survey occasions.
+
+\input{tab_temporal}
+
+\subsection{A published incumbent answer: the marsh--forest ecotone}
+\label{sec:ecotone}
+
+Every TITAN comparison above was regenerated by us on the same matrix, which
+leaves open the objection that we tuned the incumbent's run. One dataset
+removes that objection. \citet{payne2026ecotone} analyzed plant communities
+across three coastal marsh--forest ecotones undergoing marsh migration in
+New Jersey, New York and Massachusetts, and report TITAN community change
+points at $0.8$ and $7.6$ PSU soil salinity, delimiting the ecotone. Those
+numbers were published, by users of the incumbent method, before we saw the
+data. We registered the analysis---gradient, unit, taxon columns, region
+field, both split grids, and a compositional secondary---before downloading
+the file, and the script that ran it prints whether the located split falls
+inside $[0.8, 7.6]$, so there was no room afterwards to decide what counts
+as agreement.
+
+The data are 125 sampling points at three sites, percent cover in
+$0.5\,\mathrm{m}^2$ quadrats, salinity $0.09$--$42.6$ PSU, with 20 taxa
+passing the five-point occurrence rule.
+
+\emph{Detection is unambiguous.} The interaction test rejects at
+$p = 0.005$ on both split grids, and at $p = 0.005$ permuting within site,
+which is the test of record here. Twenty taxa is near the bottom of the
+range where the method works at all (Section~\ref{sec:limits}), and 125
+units is just above the design floor, so this is a stronger result than the
+design led us to expect.
+
+\emph{Localization disagrees with the incumbent.} Per the two-stage rule the
+location comes from the curve statistic, which places the structural change
+at $14.2$ PSU ($p = 0.020$)---above both published change points, in
+water that is already polyhaline. The interaction statistic's own split is
+unstable, as Section~\ref{sec:mixloc} predicts it should be: $0.3$ PSU on
+the widened grid and $0.37$ on the registered one, at the gradient's lower
+edge. The registered compositional secondary, on centred-log-ratio cover,
+detects equally strongly and places its split at $1.2$ PSU, inside TITAN's
+interval, while its curve statistic no longer rejects ($p = 0.120$).
+
+So the two channels do not agree about where this ecotone turns over, and
+the transform changes which answer the interaction statistic gives. We
+report the disagreement rather than choosing among the three numbers.
+Section~\ref{sec:closure} is the reason we do not simply prefer the
+log-ratio analysis: on null data it was the most anti-conservative cell we
+measured. What this dataset establishes is the first half of the two-stage
+claim---that structure reorganizes along this gradient, detected against an
+independently published incumbent analysis---and it illustrates the second
+half's fragility.
+
+\section{Does structure change before composition?}
+\label{sec:ordering}
+
+The early-warning literature holds that changes in correlation structure can
+precede the abundance collapses taxon-level methods detect
+\citep{scheffer2009ews}. If that were general, a structural change point
+would be a leading indicator---a boundary to act at before species are lost
+rather than after---which is a claim with practical consequences, so we
+registered a confirmatory test of it before its inputs existed
+(amendment~6). Detection is decided by the interaction test; localization by
+the curve statistic, chosen on the simulation of Section~\ref{sec:mixloc}
+alone; the taxon-level change point is TITAN's $\mathrm{sum}(z-)$ on the
+same unit-mean matrix; and the statistic is
+\[
+  R \;=\; \frac{z_{\mathrm{TITAN}} - \hat z}{\mathrm{IQR}(z)},
+\]
+positive when structure changes at the lower gradient value. The
+confirmatory test is a two-sided Wilcoxon signed-rank test of $R$ against
+zero across independent detecting datasets, to run once, and only if at
+least four qualified.
+
+Seven qualified. The answer is no: $W = 12.0$, $p = 0.81$, with four of
+seven positive and a median $R$ of $0.127$. \emph{Structure does not
+systematically change before composition.} We report this as the registered
+test's verdict and draw no ordering claim from the Everglades panel, whose
+$R = 1.69$ is the largest in the set and which, taken alone, would have
+supported one.
+
+Two things are worth saying beside that null, neither of them registered and
+both labelled accordingly.
+
+First, the null is not a statement that the two channels agree. The
+\emph{magnitudes} are large: median $|R| = 0.48$, mean $0.62$, and four of
+seven exceed a quarter of the gradient's interquartile range. What fails is
+the \emph{sign}, not the separation. Across these systems the structural and
+compositional change points are typically half an interquartile range apart
+and fall on either side with roughly equal frequency. That is a decoupling
+result rather than a concordance one, and it is the more interesting reading
+of the same numbers---but we did not register it, we cannot test it on the
+data that produced it, and a median of seven unsigned quantities is thin
+evidence for anything. We state it as a hypothesis for a future
+pre-registration, not as a finding.
+
+Second, one of the seven, Niwot, sits below the design floor of
+Section~\ref{sec:mixloc}. The registered rule admitted it because the
+detection rule was fixed in amendment~6 before the floor was measured, so
+the test above includes it as registered. Removing it descriptively changes
+nothing that matters: $W = 6.0$, $p = 0.44$, four of six positive, median
+$R = 0.176$.
+
+\paragraph{A premature run, disclosed.} This test was registered to run
+once. It was in fact run twice. The first run happened while several
+second-pass detection files were missing and TITAN's change point for one
+dataset was still computing, so five rows were wrongly treated as
+non-detecting; it gave a median $R$ of $0.039$ over four datasets with
+$p = 1.00$. That output is preserved in the repository as
+\texttt{31\_ordering\_incomplete.txt} and the deviation is recorded, dated,
+in the public pre-registration. No specification changed between the two
+runs---the estimator, detection rule, localization choice, statistic and
+test are exactly those registered. We report both because discarding the
+first would leave the record incomplete, and because the two agree: the
+ordering hypothesis fails on the incomplete inputs and on the complete ones.
 
 \section{Pre-registered application: the Butte Hill restoration network}
 \label{sec:butte}
@@ -1040,7 +1570,28 @@ precisely what TITAN does well. Section~\ref{sec:titan} shows the
 complementarity is real and runs in both directions, so the recommendation is
 to report the two together---and to treat their disagreement as a
 measurement of what kind of change the gradient drives, not as a conflict to
-be resolved.
+be resolved. Section~\ref{sec:curvature} qualifies the first clause: the
+curvature decomposition does name taxa, exactly and without extra
+machinery, and on the Everglades panel it names a set disjoint from TITAN's
+indicators. What it does not supply is a taxon-level \emph{change point},
+which is what TITAN's construction is for.
+
+The one general ecological claim we registered did not survive. If
+structural change systematically preceded compositional change, a
+structural threshold would be an early-warning boundary and the practical
+case for reading the covariance channel would make itself. Across seven
+independent detecting systems it does not: the ordering is as often one way
+as the other ($p = 0.81$; Section~\ref{sec:ordering}). We think the result
+is worth more than its null verdict suggests, for a reason we are careful
+not to overstate. The two change points are not close together and then
+unordered; they are typically half an interquartile range apart, with the
+sign varying. If that survives a test designed for it---which the present
+one was not, and which cannot honestly be run on the data that suggested
+it---then the covariance channel is not a leading indicator of the
+compositional one but an independent axis of community response, and the
+practical recommendation to run both instruments follows more strongly than
+from complementarity alone. We flag it as the obvious next pre-registration
+rather than as a result.
 
 Four limitations bound the claim. First, the Euler characteristic is
 label-invariant: a reorganization that permutes which taxa occupy which
@@ -1052,14 +1603,11 @@ association of structure with the gradient, not sharpness; and our attempt to
 calibrate the bootstrap interval width as a sharpness diagnostic failed at
 realistic design sizes (Section~\ref{sec:power}), so the method currently
 distinguishes \emph{where} structure changes fastest, not whether the change
-is discontinuous. A test of sharpness compatible with the connectance control
-is an open problem we consider worth having; the most promising route we see
-is a joint comparison of adjacent windows---representing taxa by their
-correlation profiles so that all windows share one ambient space, then
-measuring their overlap directly with an intersection Euler characteristic
-profile and certifying separation with an exact ambient-dimension test
-\citep{majhi2026regime}---which we leave to a dedicated follow-up rather
-than a second device here. Third, localization resolution is set by the window
+is discontinuous. The interaction test does not repair this: it too measures
+association, and a smooth structural trend separates the two clouds much as
+a sharp one does. A test of sharpness compatible with the connectance
+control remains open, and we now think the obstacle is not the choice of
+statistic but the resolution limit of the next paragraph. Third, localization resolution is set by the window
 width, hence by survey size; the power analysis of Section~\ref{sec:power} is
 the price list, and the public-data negative in
 Section~\ref{sec:public} is what paying insufficient attention to it looks
@@ -1067,17 +1615,19 @@ like. Fourth, the permutation test treats plots as exchangeable along the
 gradient. Where community structure is spatially autocorrelated and the
 gradient is spatially structured---as a smelter plume makes it on Butte
 Hill---the test is anti-conservative, and restricted permutations within
-spatial blocks are the appropriate remedy; we did not need them for the
-simulations or the Everglades sites, but a field application should check
-residual spatial structure first.
+spatial blocks are the appropriate remedy. Both instruments need them: the
+simulations of Sections~\ref{sec:limits} and~\ref{sec:mixloc} are precisely
+where plot-level permutation over-rejects, and every field analysis here
+reports the within-region test as the test of record wherever a region field
+exists.
 
 Two practical conclusions follow from the operating range. The first is
 about data type: the method reads correlations, and sparse counting
 destroys them, so cover, biomass or dense counts are the substrate to use,
 and an incidence matrix is close to hopeless. The second is about
 resampling: where a gradient is spatially structured, permuting plots
-freely inflates false positives threefold, and a within-region permutation
-should be reported as a matter of course.
+freely inflates false positives two- to threefold, and a within-region
+permutation should be reported as a matter of course.
 
 A better pooling statistic exists. The registered statistic averages
 $|$Cohen $d|$ across the connectance grid, but those grid points are nearly
@@ -1115,19 +1665,75 @@ feature extractors inside supervised multi-omics pipelines
 vegetation-only threshold is the clean claim, and fusion belongs to the
 follow-up where it can be tested rather than asserted.
 
-\section{Data and code availability}
+\section{Conclusions}
+
+Community co-occurrence structure changes along environmental gradients in
+most of the systems we could test, and where it changes is not where
+taxon-level methods say composition changes. Establishing that required two
+things this paper supplies and one it does not.
+
+The first is a summary that measures arrangement rather than density.
+Indexing an Euler characteristic filtration by edge count rather than by
+similarity is the whole of it, and without that control the topological
+summary is a connectance measurement wearing a different coordinate.
+
+The second is enough statistical power to see the signal at survey scale.
+The windowed split statistic, pre-registered and honest, detects in two of
+nine public gradients; recoding the same data so that taxa rather than
+windows are the sample detects in seven, and detects on the incumbent's own
+benchmark where the windowed statistic cannot. The gain is instrumental, not
+a matter of dataset choice: same matrices, same preprocessing, same
+permutation principle.
+
+What this paper does not supply is a test of \emph{thresholdness}. Both
+instruments measure association between structure and gradient; neither
+distinguishes an abrupt reorganization from a steep smooth one at the design
+sizes surveys afford, and our attempt to calibrate the bootstrap interval
+width for that purpose failed. A survey that needs to classify its gradient
+response as threshold-like rather than gradual needs a different instrument,
+or many more plots, than anything demonstrated here.
+
+We would rather the operating range be read as the paper's main practical
+contribution than the detections. An instrument whose failures are
+uncharacterized is not evidence; one whose failures are mapped can be
+trusted within them. Ours fails on sparse incidence data, fails below
+roughly a hundred units, over-rejects by a factor of two to three when a spatially
+structured gradient is permuted freely, and localizes no better than its window width
+allows. Inside those bounds, it sees something the standard toolkit does
+not.
+
+\section{Open Research}
 \label{sec:avail}
 
-All analysis code, simulation scripts, and result logs are at
-\url{https://github.com/sushovan4/ecs-community-thresholds}; the Euler characteristic
-machinery builds on GUDHI \citep{maria2014gudhi}. Public inputs are obtained
-from their original repositories by the included fetch script and are not
-redistributed. The reference implementation is Python; an R interface,
-\texttt{ecsurf}, wraps it via \texttt{reticulate} and reproduces the
-Everglades analysis from R in four lines (repository directory
-\texttt{ecsurf/}), with the stacked repeat-survey design of
-Section~\ref{sec:power} exposed through a \texttt{groups} argument. The
-TITAN comparisons use the R package TITAN2.
+All analysis code, simulation scripts, result logs and the dated
+pre-registration with its amendments and deviation records are archived at
+\url{https://github.com/sushovan4/ecs-community-thresholds} and deposited
+with a permanent identifier on Zenodo (\textsc{doi to be assigned on
+acceptance}). Public input datasets are obtained from their original
+repositories by the included fetch script and are not redistributed; each is
+cited in Table~\ref{tab:program} or in the text. The Euler characteristic
+machinery builds on GUDHI \citep{maria2014gudhi}, and the intersection
+profile on the reference implementation accompanying
+\citet{kawamura2026intersection}. The reference implementation is Python; an
+R interface, \texttt{ecsurf}, wraps it through \texttt{reticulate} and
+reproduces the Everglades analysis in four lines, with the stacked
+repeat-survey design exposed through a \texttt{groups} argument. TITAN
+comparisons use the R package TITAN2.
+
+\paragraph{Reproducibility note.} Alpha complexes are computed with GUDHI's
+\texttt{safe} predicates. An earlier version of this work used
+\texttt{fast}, which employs inexact geometric predicates; on taxon clouds
+where many taxa share identical sparse occurrence patterns---and therefore
+identical correlation profiles---the underlying Delaunay construction
+resolves the resulting ties differently across linear-algebra backends. One
+dataset returned different statistics on two machines with identical seeds,
+and \texttt{fast} disagreed with \texttt{exact} by more than $50\%$ at one
+split. \texttt{safe} agrees with \texttt{exact} to ten decimal places at
+roughly $0.7$ of its cost. Every result reported here was recomputed under
+\texttt{safe}; the superseded outputs are retained in the repository, and
+the correction is recorded in the public pre-registration. Practitioners
+applying any Alpha-complex method to sparse community data should not use
+inexact predicates.
 
 \bibliographystyle{elsarticle-harv}
 \bibliography{refs}

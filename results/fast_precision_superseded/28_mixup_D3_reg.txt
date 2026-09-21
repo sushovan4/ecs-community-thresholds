@@ -1,0 +1,5 @@
+D3: 572 units, 690 columns, 100 taxa, sparsity 0.75
+mixup split: z-hat = 48.67  T = 16.2458  p = 0.005 (199 unit permutations)  95% CI [43.34, 194.5]
+split grid: 5 quantiles from 0.3 to 0.7
+within-region (6 regions): p = 0.005
+[392s]

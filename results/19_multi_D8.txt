@@ -1,0 +1,5 @@
+D8: 3180 units, 58672 columns, 100 taxa kept of 344 passing the 5-unit rule; z = station elevation (ft NAVD88), unit range -3.62-2.18
+matrix sparsity: 0.96 of entries are zero
+primary: z-hat = 0.742  stat 1.055  p = 0.920  95% CI [0.2418, 0.8716]  (windows of 795 units)
+within-region permutation (9 regions): p = 1.000
+[1427s]

@@ -1,0 +1,4 @@
+E6: 20 units, 621 columns, 15 taxa, sparsity 0.76
+mixup split: z-hat = 2021  T = 5.1610  p = 0.900 (199 unit permutations)  95% CI [2005, 2023]
+split grid: 15 quantiles from 0.15 to 0.85
+[66s]

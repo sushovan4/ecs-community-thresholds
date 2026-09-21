@@ -1,0 +1,5 @@
+ELT: 148 units, 2470 columns, 22 taxa, sparsity 0.83
+mixup split: z-hat = 215.5  T = 6.3814  p = 0.005 (199 unit permutations)  95% CI [178.5, 918.5]
+split grid: 5 quantiles from 0.3 to 0.7
+within-region (10 regions): p = 0.020
+[51s]

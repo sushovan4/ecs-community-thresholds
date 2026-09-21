@@ -1,0 +1,3 @@
+N1 (Niwot Saddle grid): 22 survey occasions 1989-2024, 1701 plot-year columns, 98 taxa of 98
+structural: z-hat = 2009.3  stat 2.033  p = 0.175  95% CI [2004.7, 2016.5]  (windows of 6 years)
+[1787s]
